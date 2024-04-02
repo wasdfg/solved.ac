@@ -21,8 +21,20 @@ int main(void){
                 lis.push_back(box[i]);
             }
             else{
-                auto it = lower_bound(lis.begin(),lis.end(),box[i]);
-                *it = box[i];
+                //auto it = lower_bound(lis.begin(),lis.end(),box[i]);
+                //*it = box[i];
+                int left = 0;
+                int right = lis.size()-1;
+                while(left < right){
+                    int mid = (left+right)/2;
+                    if(lis[mid] >= box[i]){
+                        right = mid;
+                    }
+                    else{
+                        left = mid+1;
+                    }
+                }
+                lis[left] = box[i];
             }
         }
     }
