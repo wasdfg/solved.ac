@@ -5,6 +5,8 @@
 using namespace std;
 
 int main(void){
+    ios_base::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
     int n,a = 1;
     int dx[4] = {0,0,-1,1};
     int dy[4] = {1,-1,0,0};
@@ -23,12 +25,12 @@ int main(void){
                     cin>>br[i][j];
                 }
             }
-            priority_queue<pair<int,int>> pq;
+            queue<pair<int,int>> pq;
             pq.push({0,0});
             dist[0][0] = br[0][0];
             while(!pq.empty()){
-                int x = pq.top().first;
-                int y = pq.top().second;
+                int x = pq.front().first;
+                int y = pq.front().second;
                 pq.pop();
                 for(int i = 0;i < 4;i++){
                     if(x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < n){
