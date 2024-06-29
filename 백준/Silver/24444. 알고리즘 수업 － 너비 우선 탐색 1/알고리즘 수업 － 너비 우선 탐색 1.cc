@@ -8,6 +8,8 @@ using namespace std;
 vector<int> graph[100001];
 
 int main(void){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     int n,m,r,a,b,cnt = 1;
     vector<int> before(100001,0);
     vector<bool> visited(100001,0);
