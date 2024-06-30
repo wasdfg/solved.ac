@@ -4,21 +4,21 @@
 using namespace std;
 
 int main(void){
-    int N,M,allsum = 0;
-    int i,j;
-    int x;
-    vector<int> num;
-    //cin>>N>>M;
-    scanf("%d %d",&N,&M);
+    cin.tie(NULL);
+	ios::sync_with_stdio(false);
+    int total = 0;
+    int n,m,a,b,x;
+    vector<int> num(100001,0);
+    cin>>n>>m;
     num.push_back(0);
-    for(int a = 0;a < N;a++){
-        scanf("%d",&x);
-        allsum+=x;
-        num.push_back(allsum);
+    for(int i = 0;i < n;i++){
+        cin>>x;
+        total+=x;
+        num[i+1] = total;
     }
-    for(int a = 0;a < M;a++){
-        //cin>>i>>j;
-        scanf("%d %d",&i,&j);
-        printf("%d\n",num[j]-num[i-1]);
+    for(int i = 0;i < m;i++){
+        cin>>a>>b;
+        cout<<num[b]-num[a-1]<<"\n";
     }
+    return 0;
 }
