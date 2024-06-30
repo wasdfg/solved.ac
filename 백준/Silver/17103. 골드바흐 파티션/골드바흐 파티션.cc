@@ -1,15 +1,12 @@
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
 int main(void){
     int N,a,count;
     cin>>N;
-    bool prime[1000001];
-    for(int i = 0;i < 1000001;i++){
-        prime[i] = 1;
-    }
-    prime[0] = 0;
+    vector<bool> prime(1000001,1);
     prime[1] = 0;
     for(int i = 2;i <= 1000;i++){
         for(int j = 2;j*i<=1000000;j++){
@@ -26,4 +23,5 @@ int main(void){
     }
     cout<<count<<endl;
     }
+    return 0;
 }
