@@ -1,19 +1,25 @@
 #include<iostream>
+#include<vector>
 #include<algorithm>
 
 using namespace std;
 
 int main(void){
-    int N;
-    cin>>N;
-    int color[N][3] = {{0,},};
-    for(int i = 0;i < N;i++){
-        cin>>color[i][0]>>color[i][1]>>color[i][2];
+    int n;
+    cin>>n;
+    vector<vector<int>> rgb(n,vector<int>(3,0));
+    vector<vector<int>> dp(n,vector<int>(3,0));
+    for(int i = 0;i < n;i++){
+        cin>>rgb[i][0]>>rgb[i][1]>>rgb[i][2];
     }
-    for(int i = 0;i <= N-1;i++){
-        color[i+1][0] += min(color[i][1],color[i][2]);
-        color[i+1][1] += min(color[i][0],color[i][2]);
-        color[i+1][2] += min(color[i][0],color[i][1]);
+    for(int i = 0;i < 3;i++){
+        dp[0][i] = rgb[0][i];
     }
-    cout<<min({color[N-1][0],color[N-1][1],color[N-1][2]})<<endl;
+    for(int i = 1;i < n;i++){
+        dp[i][0] = rgb[i][0]+min(dp[i-1][1],dp[i-1][2]);
+        dp[i][1] = rgb[i][1]+min(dp[i-1][0],dp[i-1][2]);
+        dp[i][2] = rgb[i][2]+min(dp[i-1][0],dp[i-1][1]);
+    }
+    cout<<min({dp[n-1][0],dp[n-1][1],dp[n-1][2]});
+    return 0;
 }
