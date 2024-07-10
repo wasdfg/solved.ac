@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 8180 KB, 시간: 96 ms
+메모리: 3192 KB, 시간: 76 ms
 
 ### 분류
 
@@ -12,13 +12,13 @@
 
 ### 제출 일자
 
-2023년 12월 5일 16:36:57
+2024년 7월 10일 15:32:13
 
 ### 문제 설명
 
 <p><a href="http://solved.ac">solved.ac</a>는 Sogang ICPC Team 학회원들의 알고리즘 공부에 도움을 주고자 만든 서비스이다. 지금은 서강대뿐만 아니라 수많은 사람들이 solved.ac의 도움을 받아 알고리즘 공부를 하고 있다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="width: 319px; height: 64px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/93ca0eb8-56a3-4b34-bb15-281f633a0856/-/preview/" style="width: 319px; height: 64px;"></p>
 
 <p>ICPC Team은 백준 온라인 저지에서 문제풀이를 연습하는데, 백준 온라인 저지의 문제들에는 난이도 표기가 없어서, 지금까지는 다양한 문제를 풀어 보고 싶더라도 난이도를 가늠하기 어려워 무슨 문제를 풀어야 할지 판단하기 곤란했기 때문에 solved.ac가 만들어졌다. solved.ac가 생긴 이후 전국에서 200명 이상의 기여자 분들께서 소중한 난이도 의견을 공유해 주셨고, 지금은 약 7,000문제에 난이도 표기가 붙게 되었다.</p>
 

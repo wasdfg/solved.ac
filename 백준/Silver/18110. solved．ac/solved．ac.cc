@@ -6,25 +6,23 @@
 using namespace std;
 
 int main(void){
-    int diff;
-    double num,cut,avg;
-    vector<double> diffi;
-    cin>>num;
-    if(num == 0){
-        cout<<0<<endl;
+    double avg = 0.0;
+    int n,x;
+    cin>>n;
+    if(n != 0){
+        vector<int> diff(n,0);
+        for(int i = 0;i < n;i++){
+            cin>>diff[i];
+        }
+        sort(diff.begin(),diff.end());
+        for(int i = round(n*0.15);i < n-round(n*0.15);i++){
+            avg+=diff[i];
+        }
+        avg/=(n-round(n*0.15)-round(n*0.15));
+        cout<<round(avg);
     }
     else{
-        for(int i = 0;i < num;i++){
-            cin>>diff;
-            diffi.push_back(diff);
-        }
-        stable_sort(diffi.begin(),diffi.end());
-        cut = round(num * 0.15);
-        for(int i = cut;i < num - cut;i++){
-            avg+=diffi[i];
-        }
-        avg/=(num-cut-cut);
-        avg= round(avg);
-        cout<<round(avg)<<endl;
+        cout<<0;
     }
+    return 0;
 }
