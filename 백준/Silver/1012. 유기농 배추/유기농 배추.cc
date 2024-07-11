@@ -1,51 +1,47 @@
 #include<iostream>
 #include<vector>
+#include<queue>
 
 using namespace std;
 
-int lenght,height,count;
-vector<vector<int>> bat;
-
-int dfs(int i,int j){
-    if(i - 1 >= 0 && i - 1 < lenght && bat[i-1][j] == 1){
-        bat[i-1][j] = 0;
-        dfs(i-1,j);
-    }
-    if(i + 1 >= 0 && i + 1 < lenght && bat[i+1][j] == 1){
-        bat[i+1][j] = 0;
-        dfs(i+1,j);
-    }
-    if(j - 1 >= 0 && j - 1 < height && bat[i][j-1] == 1){
-        bat[i][j-1] = 0;
-        dfs(i,j-1);
-    }
-    if(j + 1 >= 0 && j + 1 < height && bat[i][j+1] == 1){
-        bat[i][j+1] = 0;
-        dfs(i,j+1);
-    }
-    return 0;
-}
-
 int main(void){
-    int tcase,baechu,x,y;
-    cin>>tcase;
-    for(int i = 0;i < tcase;i++){
-    count = 0;
-    cin>>lenght>>height>>baechu;
-    bat = vector<vector<int>>(lenght,vector<int>(height,0));
-    for(int i = 0;i < baechu;i++){
-        cin>>x>>y;
-        bat[x][y] = 1;
-    }
-    for(int i = 0;i < lenght;i++){
-        for(int j = 0;j < height;j++){
-            if(bat[i][j] == 1){
-                bat[i][j] = 0;
-                dfs(i,j);
-                count++;
+    int t,n,m,k,a,b,count;
+    vector<vector<int>> bachu;
+    vector<vector<bool>> visited;
+    int dx[4] = {0,0,-1,1};
+    int dy[4] = {1,-1,0,0};
+    cin>>t;
+    for(int i = 0;i < t;i++){
+        cin>>m>>n>>k;
+        count = 0;
+        bachu.assign(n,vector<int>(m,0));
+        visited.assign(n,vector<bool>(m,0));
+        queue<pair<int,int>> togo;
+        for(int j = 0;j < k;j++){
+            cin>>a>>b;
+            bachu[b][a] = 1;
+        }
+        for(int s = 0;s < n;s++){
+            for(int t = 0;t < m;t++){
+                if(bachu[s][t] == 1 && visited[s][t] == 0){
+                    visited[s][t] = 1;
+                    togo.push({s,t});
+                    while(!togo.empty()){
+                        int x = togo.front().first;
+                        int y = togo.front().second;
+                        togo.pop();
+                        for(int u = 0;u < 4;u++){
+                            if(x+dx[u] >= 0 && x+dx[u] < n && y+dy[u] >= 0 && y+dy[u] < m && bachu[x+dx[u]][y+dy[u]] == 1 && visited[x+dx[u]][y+dy[u]] == 0){
+                                visited[x+dx[u]][y+dy[u]] = 1;
+                                togo.push({x+dx[u],y+dy[u]});
+                            }
+                        }
+                    }
+                    count++;
+                }
             }
         }
+        cout<<count<<endl;
     }
-    cout<<count<<endl;
-    }
+    return 0;
 }
