@@ -1,74 +1,72 @@
 #include<iostream>
 #include<deque>
 #include<string>
+#include<algorithm>
 
 using namespace std;
 
 int main(void){
-    int T,n,num;
-    bool reverse,error;
-    string p,array;
-    cin>>T;
-    for(int i = 0;i < T;i++){
-        cin>>p;
-        cin>>n;
-        cin>>array;
-        string s = "";
-        deque<int> X;
-        reverse = false;
-        error = false;
-        for(int j = 0;j < array.length();j++){
-            if(isdigit(array[j])){
-                s+=array[j];
+    int t,n;
+    string p,x;
+    cin>>t;
+    for(int i = 0;i < t;i++){
+        deque<int> num;
+        string chgnum = "";
+        bool error = 0,back = 0;
+        cin>>p>>n>>x;
+        for(int j = 1;j < x.length();j++){
+            if(x[1] == ']'){
+                break;
+            }
+            if(x[j] >= 48 && x[j] < 58){
+                chgnum+=(x[j]);
             }
             else{
-                if(!s.empty()){
-                    X.push_back(stoi(s));
-                    s = "";
-                }
+                num.push_back(stoi(chgnum));
+                chgnum = "";
             }
         }
-        for(int j = 0;j < p.size();j++){
+        for(int j = 0;j < p.length();j++){
             if(p[j] == 'R'){
-                reverse = (!reverse);
+                back = !back;
             }
-            else if(p[j] == 'D'){
-                if(X.size() < 1){
-                    error = true;
-                    break;
+            else{
+                if(num.empty()){
+                    error = 1;
                 }
                 else{
-                    if(reverse == true){
-                        X.pop_back();
+                    if(back == 0){
+                        num.pop_front();
                     }
                     else{
-                        X.pop_front();
+                        num.pop_back();
                     }
                 }
             }
         }
-        if(error == true){
+        if(error == 1){
             cout<<"error\n";
         }
         else{
             cout<<"[";
-            if(reverse == false){
-            for(int j = 0;j < X.size();j++){
-                cout<<X[j];
-                if(j < X.size() - 1){
-                    cout<<",";
+            if(back == 1){
+                for(int j = num.size()-1;j >= 0;j--){
+                    cout<<num[j];
+                    if(j > 0){
+                        cout<<",";
+                    }
                 }
-            }
             }
             else{
-                for(int j = X.size()-1;j >= 0;j--){
-                cout<<X[j];
-                if(j > 0){
-                    cout<<",";
+                for(int j = 0;j < num.size();j++){
+                    cout<<num[j];
+                    if(j < num.size() - 1){
+                        cout<<",";
+                    }
                 }
-            }
             }
             cout<<"]\n";
         }
     }
+    return 0;
 }
