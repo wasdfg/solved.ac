@@ -5,19 +5,15 @@
 using namespace std;
 
 int main(void){
-    int M,N,days = 0;
-    int tx[4] = {0,0,-1,1};
-    int ty[4] = {1,-1,0,0};
-    cin>>M>>N;
-    vector<vector<int>> tomato(1000,vector<int>(1000,0));
+    int n,m,result = 0;
+    cin>>m>>n;
+    vector<vector<int>> tomato(n,vector<int>(m,0));
     queue<pair<int,int>> togo;
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < M;j++){
+    int dx[4] = {0,0,-1,1};
+    int dy[4] = {1,-1,0,0};
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < m;j++){
             cin>>tomato[i][j];
-        }
-    }
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < M;j++){
             if(tomato[i][j] == 1){
                 togo.push({i,j});
             }
@@ -28,23 +24,21 @@ int main(void){
         int y = togo.front().second;
         togo.pop();
         for(int i = 0;i < 4;i++){
-            if(x+tx[i] >= 0 && x+tx[i] < N && y+ty[i] >= 0 && y+ty[i] < M && tomato[x+tx[i]][y+ty[i]] == 0){
-                tomato[x+tx[i]][y+ty[i]] = tomato[x][y] + 1;
-                togo.push({x+tx[i],y+ty[i]});
+            if(x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < m && tomato[x+dx[i]][y+dy[i]] == 0){
+                tomato[x+dx[i]][y+dy[i]] = tomato[x][y]+1;
+                result = max(result,tomato[x+dx[i]][y+dy[i]]);
+                togo.push({x+dx[i],y+dy[i]});
             }
         }
     }
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            if (tomato[i][j] == 0) {
-                cout << -1 << endl;
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < m;j++){
+            if(tomato[i][j] == 0){
+                cout<<"-1";
                 return 0;
             }
-            if (days < tomato[i][j]){ 
-                days = tomato[i][j];
-            }
         }
     }
-    cout <<days-1;
+    cout<<(result > 0?result-1:0);
     return 0;
 }
