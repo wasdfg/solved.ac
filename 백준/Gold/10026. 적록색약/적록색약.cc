@@ -1,75 +1,94 @@
 #include<iostream>
 #include<vector>
+#include<string>
+#include<queue>
 
 using namespace std;
 
-vector<vector<int>> RGB;
-vector<vector<bool>> visited;
-int remember,N;
-int tx[4] = {0,0,-1,1};
-int ty[4] = {1,-1,0,0};
-
-int DFS(int x,int y){
-    for(int i = 0;i < 4;i++){
-        if(x+tx[i] < 0 || x+tx[i] >= N || y+ty[i] < 0 || y+ty[i] >= N){
-            continue;
-        }
-        if(visited[x+tx[i]][y+ty[i]] == 0 && RGB[x+tx[i]][y+ty[i]] == remember){
-            visited[x+tx[i]][y+ty[i]] = 1;
-            DFS(x+tx[i],y+ty[i]);
-        }
-    }
-    return 0;
-}
-
 int main(void){
-    int normal = 0,blind = 0;
-    char color;
-    cin>>N;
-    RGB.resize(N,vector<int>(N,0));
-    visited.resize(N,vector<bool>(N,0));
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
-            cin>>color;
-            if(color == 'R'){
-                RGB[i][j] = 1;
+    int n,blind = 0,noblind = 0,check;
+    int dx[4] = {0,0,-1,1};
+    int dy[4] = {1,-1,0,0};
+    string s;
+    cin>>n;
+    vector<vector<int>> color(n,vector<int>(n,0));
+    vector<vector<bool>> visited(n,vector<bool>(n,0));
+    queue<pair<int,int>> togo;
+
+    for(int i = 0;i < n;i++){
+        cin>>s;
+        for(int j = 0;j < s.length();j++){
+            if(s[j] == 'R'){
+                color[i][j] = 1;
             }
-            else if(color == 'G'){
-                RGB[i][j] = 2;
+            else if(s[j] == 'B'){
+                color[i][j] = 2;
             }
             else{
-                RGB[i][j] = 3;
+                color[i][j] = 3;
             }
         }
     }
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < n;j++){
             if(visited[i][j] == 0){
-                remember = RGB[i][j];
                 visited[i][j] = 1;
-                DFS(i,j);
-                normal++;
-            }
-        }
-    }
+                togo.push({i,j});
+                if(color[i][j] == 1){
+                    check = 1;
+                }
+                else if(color[i][j] == 2){
+                    check = 2;
+                }
+                else{
+                    check = 3;
+                }
+                while(!togo.empty()){
+                    int x = togo.front().first;
+                    int y = togo.front().second;
+                    togo.pop();
+                    for(int k = 0;k < 4;k++){
+                        if(x+dx[k] >= 0 && x+dx[k] < n && y+dy[k] >= 0 && y+dy[k] < n && visited[x+dx[k]][y+dy[k]] == 0 && color[x+dx[k]][y+dy[k]] == check){
+                            visited[x+dx[k]][y+dy[k]] = 1;
+                            togo.push({x+dx[k],y+dy[k]});
+                        }
+                    }
+                }
+                noblind++;
 
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
-            if(RGB[i][j] == 2){
-                RGB[i][j] = 1;
             }
         }
     }
-    visited.assign(N,vector<bool>(N,0));
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
+    visited.assign(n,vector<bool>(n,0));
+    while(!togo.empty()){
+        togo.pop();
+    }
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < n;j++){
             if(visited[i][j] == 0){
-                remember = RGB[i][j];
                 visited[i][j] = 1;
-                DFS(i,j);
+                togo.push({i,j});
+                if(color[i][j] == 1 || color[i][j] == 3){
+                    check = 1;
+                }
+                else{
+                    check = 0;
+                }
+                while(!togo.empty()){
+                    int x = togo.front().first;
+                    int y = togo.front().second;
+                    togo.pop();
+                    for(int k = 0;k < 4;k++){
+                        if(x+dx[k] >= 0 && x+dx[k] < n && y+dy[k] >= 0 && y+dy[k] < n && visited[x+dx[k]][y+dy[k]] == 0 && color[x+dx[k]][y+dy[k]]% 2 == check){
+                            visited[x+dx[k]][y+dy[k]] = 1;
+                            togo.push({x+dx[k],y+dy[k]});
+                        }
+                    }
+                }
                 blind++;
             }
         }
     }
-    cout<<normal<<" "<<blind<<endl;
+    cout<<noblind<<" "<<blind;
+    return 0;
 }
