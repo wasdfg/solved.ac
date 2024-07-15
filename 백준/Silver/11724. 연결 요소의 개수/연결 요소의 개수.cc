@@ -1,40 +1,38 @@
 #include<iostream>
 #include<vector>
+#include<queue>
 #include<algorithm>
 
 using namespace std;
 
-vector<vector<int>> graph;
-vector<bool> visited;
-
-int dfs(int x){
-    visited[x] = 1;
-    for(int i = 0;i < graph[x].size();i++){
-        if(visited[graph[x][i]] == 0){
-            dfs(graph[x][i]);
-        }
-    }
-    return 0;
-}
-
 int main(void){
-    int N,M,a,b,count = 0;
-    cin>>N>>M;
-    graph.resize(N);
-    visited.resize(N);
-    for(int i = 0;i < M;i++){
-        cin>>a>>b;
-        graph[a-1].push_back(b-1);
-        graph[b-1].push_back(a-1);
+    int n,m,u,v,count = 0;
+    cin>>n>>m;
+    vector<int> graph[n+1];
+    vector<bool> visited(n+1,0);
+    queue<int> togo;
+    for(int i = 0;i < m;i++){
+        cin>>u>>v;
+        graph[u].push_back(v);
+        graph[v].push_back(u);
     }
-    for(int i = 0;i < N;i++){
-        stable_sort(graph[i].begin(),graph[i].end());
-    }
-    for(int i = 0;i < N;i++){
+    for(int i = 1;i < n+1;i++){
         if(visited[i] == 0){
-            dfs(i);
+            togo.push(i);
+            visited[i] = 1;
+            while(!togo.empty()){
+                int x = togo.front();
+                togo.pop();
+                for(int j = 0;j < graph[x].size();j++){
+                    if(visited[graph[x][j]] == 0){
+                        visited[graph[x][j]] = 1;
+                        togo.push(graph[x][j]);
+                    }
+                }
+            }
             count++;
         }
     }
-    cout<<count<<endl;
+    cout<<count;
+    return 0;
 }
