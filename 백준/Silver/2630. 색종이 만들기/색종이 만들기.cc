@@ -3,47 +3,46 @@
 
 using namespace std;
 
+int n,zero = 0,one = 0;
 vector<vector<int>> paper;
-int N,wpaper = 0,bpaper = 0;
-bool same;
 
 int dq(int x,int y,int len){
-    int color = paper[x][y];
-    same = true;
+    int now = paper[x][y];
+    bool complete = 1;
     for(int i = x;i < x+len;i++){
         for(int j = y;j < y+len;j++){
-            if(paper[i][j] != color){
-                same = false;
+            if(paper[i][j] != now){
+                complete = 0;
                 break;
             }
         }
     }
-    if(!same){
-        dq(x,y,len/2);
-        dq(x,y+len/2,len/2);
+    if(complete == 0){
         dq(x+len/2,y,len/2);
+        dq(x,y+len/2,len/2);
         dq(x+len/2,y+len/2,len/2);
+        dq(x,y,len/2);
     }
     else{
-        if(color == 0){
-            wpaper++;
+        if(paper[x][y] == 1){
+            one++;
         }
         else{
-            bpaper++;
+            zero++;
         }
     }
     return 0;
 }
 
 int main(void){
-    cin>>N;
-    paper.resize(N,vector<int>(N,0));
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
+    cin>>n;
+    paper.assign(n,vector<int>(n,0));
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < n;j++){
             cin>>paper[i][j];
         }
     }
-    dq(0,0,N);
-    cout<<wpaper<<"\n"<<bpaper;
+    dq(0,0,n);
+    cout<<zero<<endl<<one;
     return 0;
 }
