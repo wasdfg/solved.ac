@@ -5,18 +5,25 @@
 using namespace std;
 
 int main(void){
-    int N;
-    cin>>N;
-    vector<int> makeone(N+1,0);
-    for(int i = 2;i <= N;i++){
-        makeone[i] = makeone[i-1] + 1;
-        if(i % 2 == 0){
-            makeone[i] = min(makeone[i/2]+1,makeone[i]);
+    int x;
+    cin>>x;
+    vector<int> dp(x+1,0);
+    dp[2] = 1;
+    dp[3] = 1;
+    for(int i = 4;i < x+1;i++){
+        if(i % 6 == 0){
+            dp[i] = min({dp[i/2]+1,dp[i/3]+1,dp[i-1]});
         }
-        if(i % 3 == 0){
-            makeone[i] = min(makeone[i/3]+1,makeone[i]);
+        else if(i % 2 == 0){
+            dp[i] = min(dp[i/2]+1,dp[i-1]+1);
+        }
+        else if(i % 3 == 0){
+            dp[i] = min(dp[i/3]+1,dp[i-1]+1);
+        }
+        else{
+            dp[i] = dp[i-1]+1;
         }
     }
-    cout<<makeone[N];
+    cout<<dp[x];
     return 0;
 }
