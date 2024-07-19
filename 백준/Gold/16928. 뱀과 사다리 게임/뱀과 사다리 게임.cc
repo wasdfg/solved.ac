@@ -5,29 +5,31 @@
 
 using namespace std;
 
-vector<int> board(101,0);
-vector<bool> visited(101,0);
+
 
 int main(void){
-    int N,M,a,b,x,y;
-    cin>>N>>M;
+    int n,m,a,b,result;
+    cin>>n>>m;
+    vector<int> board(101,0);
+    vector<bool> visited(101,0); 
     queue<pair<int,int>> togo;
-    for(int i = 0;i < N;i++){
+    for(int i = 0;i < n;i++){
         cin>>a>>b;
         board[a] = b;
 
     }
-    for(int i = 0;i < M;i++){
+    for(int i = 0;i < m;i++){
         cin>>a>>b;
         board[a] = b;
     }
     visited[1] = 1;
     togo.push({1,0});
     while(!togo.empty()){
-        x = togo.front().first;
-        y = togo.front().second;
+        int x = togo.front().first;
+        int y = togo.front().second;
         togo.pop();
         if(x == 100){
+            result = y;
             break;
         }
         for(int i = 1;i <= 6;i++){
@@ -43,5 +45,6 @@ int main(void){
             }
         }
     }
-    cout<<y;
+    cout<<result;
+    return 0;
 }
