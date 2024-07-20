@@ -7,6 +7,9 @@
 using namespace std;
 
 int main(void){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
     ull n,m,s,e,a,b,c;
     cin>>n>>m;
     vector<pair<ull,ull>> city[n+1];
