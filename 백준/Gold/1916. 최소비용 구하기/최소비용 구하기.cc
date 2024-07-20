@@ -5,48 +5,34 @@
 #define ull unsigned long long
 
 using namespace std;
-vector<pair<int,int>> route[1001];
-vector<ull> len;
-int start,last,N;
 
-int daijkstra(int start){
-    priority_queue<pair<ull,ull>> pq;
-    pq.push({start,0});
-    len[start] = 0;
-    while(!pq.empty()){
-        int cur = pq.top().first;
-        int cost = -pq.top().second;
-        pq.pop();
-        if(cost > len[cur]){
+int main(void){
+    ull n,m,s,e,a,b,c;
+    cin>>n>>m;
+    vector<pair<ull,ull>> city[n+1];
+    vector<ull> money(n+1,30000000000);
+    priority_queue<pair<ull,ull>> togo;
+    for(int i = 0;i < m;i++){
+        cin>>a>>b>>c;
+        city[a].push_back({b,c});
+    }
+    cin>>s>>e;
+    money[s] = 0;
+    togo.push({0,s});
+    while(!togo.empty()){
+        int now = togo.top().second;
+        int cost = togo.top().first;
+        togo.pop();
+        if(cost > money[now]){
             continue;
         }
-        for(int i = 0;i < route[cur].size();i++){
-            int next = route[cur][i].first;
-            int ncost = route[cur][i].second;
-            if(len[next] > cost+ncost){
-                len[next] = cost+ncost;
-                pq.push({next,-len[next]});
+        for(int i = 0;i < city[now].size();i++){
+            if(cost+city[now][i].second < money[city[now][i].first]){
+                money[city[now][i].first] = cost+city[now][i].second;
+                togo.push({cost+city[now][i].second,city[now][i].first});
             }
         }
     }
-    return 0;
-}
-
-
-int main(void){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    int M,x,y,cost;
-    cin>>N>>M;
-    len.resize(N+1,999999999);
-
-    for(int i = 0;i < M;i++){
-        cin>>x>>y>>cost;
-        route[x].push_back({y,cost});
-    }
-
-    cin>>start>>last;
-    daijkstra(start);
-    cout<<len[last];
+    cout<<money[e];
     return 0;
 }
