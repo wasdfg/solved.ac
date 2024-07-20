@@ -3,45 +3,36 @@
 
 using namespace std;
 
-vector<vector<int>> fw;
 
 int main(void){
-    int N,x;
-    cin>>N;
-    fw.resize(N,vector<int>(N,0));
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
-            cin>>x;
-            if(x == 0){
-                fw[i][j] =99999999;
+    int n,x;
+    cin>>n;
+    vector<vector<int>> g(n,vector<int>(n,0));
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < n;j++){
+            cin>>g[i][j];
+            if(g[i][j] == 0){
+                g[i][j] = 10000;
+            }
+        }
+    }
+    for(int k = 0;k < n;k++){
+        for(int i = 0;i < n;i++){
+            for(int j = 0;j < n;j++){
+                g[i][j] = min(g[i][j],g[i][k]+g[k][j]);
+            }
+        }
+    }
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < n;j++){
+            if(g[i][j] == 10000 || g[i][j] == 0){
+                cout<<"0 ";
             }
             else{
-                fw[i][j] = x;
+                cout<<"1 ";
             }
         }
-    }
-    for(int k = 0;k < N;k++){
-        for(int i = 0;i < N;i++){
-            for(int j = 0;j < N;j++){
-                fw[i][j] = min(fw[i][j],fw[i][k]+fw[k][j]);
-            }
-        }
-    }
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
-            if(fw[i][j] > 0 && fw[i][j] < 99999999){
-                fw[i][j] = 1;
-            }
-            else{
-                fw[i][j] = 0;
-            }
-        }
-    }
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
-            cout<<fw[i][j]<<" ";
-        }
-        cout<<"\n";
+        cout<<endl;
     }
     return 0;
 }
