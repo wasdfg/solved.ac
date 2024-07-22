@@ -2,37 +2,35 @@
 #include<vector>
 
 using namespace std;
-vector<vector<int>> fw;
 
 int main(void){
-    int N,M,a,b,c;
-    cin>>N>>M;
-    fw.resize(N,vector<int>(N,999999999));
-    for(int i = 0;i < M;i++){
+    int n,m,a,b,c;
+    cin>>n>>m;
+    vector<vector<int>> bus(n,vector<int>(n,1000000000));
+    for(int i = 0;i < m;i++){
         cin>>a>>b>>c;
-        if(fw[a-1][b-1] > c){
-        fw[a-1][b-1] = c;
-        }
+        bus[a-1][b-1] = min(c,bus[a-1][b-1]);
     }
-    for(int i = 0;i < N;i++){
-        fw[i][i] = 0;
+    for(int i = 0;i < n;i++){
+        bus[i][i] = 0;
     }
-    for(int k = 0;k < N;k++){
-        for(int i = 0;i < N;i++){
-            for(int j = 0;j < N;j++){
-                fw[i][j] = min(fw[i][j],fw[i][k]+fw[k][j]);
+    for(int k = 0;k < n;k++){
+        for(int i = 0;i < n;i++){
+            for(int j = 0;j < n;j++){
+                bus[i][j] = min(bus[i][j],bus[i][k]+bus[k][j]);
             }
         }
     }
-    for(int i = 0;i < N;i++){
-        for(int j = 0;j < N;j++){
-            if(fw[i][j] == 999999999){
-                cout<<0<<" ";
+    for(int i = 0;i < n;i++){
+        for(int j =0;j < n;j++){
+            if(bus[i][j] == 1000000000){
+                cout<<"0 ";
             }
             else{
-            cout<<fw[i][j]<<" ";
+                cout<<bus[i][j]<<" ";
             }
         }
         cout<<endl;
     }
+    return 0;
 }
