@@ -3,41 +3,34 @@
 #include<queue>
 
 using namespace std;
-pair<int,int> pos[100000];
-vector<bool> visited(100000,0);
+
+vector<bool> visited(100002,0);
 
 int main(void){
-    int N,K;
-    cin>>N>>K;
-    for(int i = 0;i < 100001;i++){
-        pos[i].second = 9999999;
-    }
-    queue<int> togo;
-    togo.push(N);
-    pos[N].second = 0;
-    visited[N] = true;
+    int n,k,result;
+    cin>>n>>k;
+    priority_queue<pair<int,int>> togo;
+    visited[n] = 1;
+    togo.push({0,n});
     while(!togo.empty()){
-        int x = togo.front();
-        int y = pos[x].second;
+        int now = togo.top().second;
+        int cost = -togo.top().first;
         togo.pop();
-        if(x == K){
+        if(now == k){
+            result = cost;
             break;
         }
-        if(x*2 <= 100000 && visited[x*2] == false){
-            visited[x*2] = true;
-            pos[x*2].second = y;
-            togo.push(x*2);
+        visited[now] = 1;
+        if(now*2 < 100002 && visited[now*2] == 0){
+            togo.push({-cost,now*2});
         }
-        if(x-1 >= 0 && visited[x-1] == false){
-            visited[x-1] = true;
-            pos[x-1].second = y+1;
-            togo.push(x-1);
+        if(now-1 >= 0 && visited[now-1] == 0){
+            togo.push({-(cost+1),now-1});
         }
-        if(x+1 <= 100000 && visited[x+1] == false){
-            visited[x+1] = true;
-            pos[x+1].second = y+1;
-            togo.push(x+1);
+        if(now+1 < 100002 && visited[now+1] == 0){
+            togo.push({-(cost+1),now+1});
         }
     }
-    cout<<pos[K].second;
+    cout<<result;
+    return 0;
 }
