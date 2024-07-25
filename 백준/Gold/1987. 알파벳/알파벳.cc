@@ -5,39 +5,35 @@
 using namespace std;
 
 vector<bool> check(26,0);
-vector<vector<int>> alpha;
+vector<string> alpha;
 
-int R,C;
-int tx[4] = {0,0,-1,1};
-int ty[4] = {1,-1,0,0};
-int result;
+int r,c;
+int dx[4] = {0,0,-1,1};
+int dy[4] = {1,-1,0,0};
+int result = 0;
 
-int dfs(int x,int y,int count){
-    result = max(result,count);
+void dfs(int x,int y,int len){
+    result = max(len,result);
     for(int i = 0;i < 4;i++){
-        if(x+tx[i] >= 0 && x+tx[i] < R && y+ty[i] >= 0 && y+ty[i] < C){
-            if(check[alpha[x+tx[i]][y+ty[i]]] == false){
-                check[alpha[x+tx[i]][y+ty[i]]] = true;
-                dfs(x+tx[i],y+ty[i],count+1);
-                check[alpha[x+tx[i]][y+ty[i]]] = false;
-            }
+        if(x+dx[i] >= 0 && x+dx[i] < r && y+dy[i] >= 0 && y+dy[i] < c && check[alpha[x+dx[i]][y+dy[i]]-'A'] == 0){
+            check[alpha[x+dx[i]][y+dy[i]]-'A'] = 1;
+            dfs(x+dx[i],y+dy[i],len+1);
+            check[alpha[x+dx[i]][y+dy[i]]-'A'] = 0;
         }
     }
-    return 0;
 }
 
 int main(void){
-    
-    cin>>R>>C;
-    alpha.resize(R,vector<int>());
-    for(int i = 0;i < R;i++){
-        string s;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    string s;
+    cin>>r>>c;
+    for(int i = 0;i < r;i++){
         cin>>s;
-        for(char c:s){
-            alpha[i].push_back(c-'A');
-        }
+        alpha.push_back(s);
     }
-    check[alpha[0][0]] = true;
+    check[alpha[0][0]-'A'] = 1;
     dfs(0,0,1);
     cout<<result;
     return 0;
