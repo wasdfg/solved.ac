@@ -1,39 +1,34 @@
 #include<iostream>
 #include<vector>
-#include<algorithm>
+#include<queue>
 
 using namespace std;
 
-int N;
-vector<vector<int>> togo;
-vector<int> visited;
-
-int dfs(int x){
-    for(int i = 0;i < togo[x].size();i++){
-        if(visited[togo[x][i]] == -1){
-            visited[togo[x][i]] = x+1;
-            dfs(togo[x][i]);
+int main(void){
+    int n,a,b;
+    cin>>n;
+    vector<int> tree[n+1];
+    vector<int> parent(n+1,0);
+    for(int i = 0;i < n-1;i++){
+        cin>>a>>b;
+        tree[a].push_back(b);
+        tree[b].push_back(a);
+    }
+    queue<int> togo;
+    togo.push(1);
+    parent[1] = 1;
+    while(!togo.empty()){
+        int x = togo.front();
+        togo.pop();
+        for(int i = 0;i < tree[x].size();i++){
+            if(parent[tree[x][i]] == 0){
+                parent[tree[x][i]] = x;
+                togo.push(tree[x][i]);
+            }
         }
     }
-    return 0;
-}
-
-int main(void){
-    int a,b;
-    cin>>N;
-    togo.resize(N,vector<int>());
-    visited.resize(N,-1);
-    for(int i = 0;i < N-1;i++){
-        cin>>a>>b;
-        togo[a-1].push_back(b-1);
-        togo[b-1].push_back(a-1);
-    }
-    for(int i = 0;i < N;i++){
-        sort(togo[i].begin(),togo[i].end());
-    }
-    dfs(0);
-    for(int i = 1;i < N;i++){
-        cout<<visited[i]<<"\n";
+    for(int i = 2;i < n+1;i++){
+        cout<<parent[i]<<"\n";
     }
     return 0;
 }
