@@ -1,37 +1,35 @@
 #include<iostream>
-#include<map>
 #include<queue>
+#include<map>
 
 using namespace std;
 
-map<long long,long long> num;
-
 int main(void){
-    long long A,B;
-    cin>>A>>B;
+    long long a,b;
+    cin>>a>>b;
     queue<long long> togo;
-    togo.push(A);
-    num[A] = 1;
+    map<long long,long long> check;
+    togo.push(a);
     while(!togo.empty()){
-        long long x = togo.front();
+        long long now = togo.front();
         togo.pop();
-        if(x == B){
+        if(now == b){
             break;
         }
-        if((x*10+1) <= B){
-            num[x*10+1]= num[x]+1;
-            togo.push(x*10+1);
+        if(now*10+1 <= b){
+            togo.push(now*10+1);
+            check[now*10+1] = check[now]+1;
         }
-        if(x*2 <= B){
-            num[x*2] = num[x]+1;
-            togo.push(x*2);
+        if(now*2 <= b){
+            togo.push(now*2);
+            check[now*2] = check[now]+1;
         }
     }
-    if(num[B] != 0){
-        cout<<num[B];
+    if(check[b] == 0){
+        cout<<"-1";
     }
     else{
-        cout<<"-1";
+        cout<<check[b]+1;
     }
     return 0;
 }
