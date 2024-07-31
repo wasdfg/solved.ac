@@ -4,27 +4,25 @@
 using namespace std;
 
 int main(void){
-    long long T,N,num,earn,check;
-    vector<long long> stock;
-    cin>>T;
-    for(long long i = 0;i < T;i++){
-        earn = 0;
-        check = 0;
-        cin>>N;
-        for(long long j = 0;j < N;j++){
-            cin>>num;
-            stock.push_back(num);
+    long long t,n;
+    cin>>t;
+    for(int i = 0;i < t;i++){
+        cin>>n;
+        vector<long long> stock(n,0);
+        for(int j = 0;j < n;j++){
+            cin>>stock[j];
         }
-        for(long long j = N-1;j >= 0;j--){
-            if(stock[j] > check){
+        long long result = 0;
+        long long check = stock[n-1];
+        for(int j = n-1;j >= 0;j--){
+            if(check < stock[j]){
                 check = stock[j];
             }
             else{
-                earn += (check - stock[j]);
+                result+=(check-stock[j]);
             }
         }
-        cout<<earn<<endl;
-        stock.clear();
+        cout<<result<<endl;
     }
     return 0;
 }
