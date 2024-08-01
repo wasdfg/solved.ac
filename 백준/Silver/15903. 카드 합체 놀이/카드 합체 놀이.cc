@@ -5,27 +5,27 @@ using namespace std;
 
 int main(void){
     int n,m;
-    long long a,check,result;
-    priority_queue<long long,vector<long long>,greater<long long>> pq;
+    long long num,result = 0;
     cin>>n>>m;
+    priority_queue<long long,vector<long long>,greater<long long>> card;
     for(int i = 0;i < n;i++){
-        cin>>a;
-        pq.push(a);
+        cin>>num;
+        card.push(num);
     }
-    while(m > 0){
-        result = 0;
-        check = pq.top();
-        pq.pop();
-        result+= (check + pq.top());
-        pq.pop();
-        pq.push(result);
-        pq.push(result);
-        m--;
+    for(int i = 0;i < m;i++){
+        long long x = card.top();
+        card.pop();
+        long long y = card.top();
+        card.pop();
+        long long tmp = x;
+        x+=y;
+        y+=tmp;
+        card.push(x);
+        card.push(y);
     }
-    result = 0;
-    while(!pq.empty()){
-        result+=pq.top();
-        pq.pop();
+    while(!card.empty()){
+        result+=card.top();
+        card.pop();
     }
     cout<<result;
     return 0;
