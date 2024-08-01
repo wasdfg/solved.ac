@@ -5,30 +5,19 @@
 using namespace std;
 
 int main(void){
-    int N;
-    cin>>N;
-    vector<int> makeone(N+1,0);
-    vector<int> copy(N+1,0);
-    makeone[0] = 0;
-    for(int i = 1;i < N+1;i++){
-        cin>>makeone[i];
+    int n;
+    cin>>n;
+    vector<int> stair(n+1,0);
+    vector<int> dp(n+1,0);
+    for(int i = 1;i < n+1;i++){
+        cin>>stair[i];
     }
-    if(makeone.size() <= 2){
-        int x = 0;
-        for(int i = 0;i < makeone.size();i++){
-            x+=makeone[i];
-        }
-        cout<<x;
+    dp[1] = stair[1];
+    dp[2] = stair[1]+stair[2];  
+    dp[3] = max(stair[2]+stair[3],stair[1]+stair[3]);
+    for(int i = 4;i < n+1;i++){
+        dp[i] = max(dp[i-3]+stair[i-1]+stair[i],dp[i-2]+stair[i]);
     }
-    else{
-        copy[0] = 0;
-        copy[1] = makeone[1];
-        copy[2] = makeone[1]+makeone[2];
-        copy[3] = makeone[3]+max(makeone[1],makeone[2]);
-        for(int i = 4;i < N+1;i++){
-            copy[i] = max(copy[i-2],copy[i-3]+makeone[i-1])+makeone[i];
-        }
-        cout<<copy[N];
-    }
+    cout<<dp[n];
     return 0;
 }
