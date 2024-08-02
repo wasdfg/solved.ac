@@ -4,38 +4,19 @@
 using namespace std;
 
 int main(void){
-    int N,num;
-    cin>>N;
-    vector<int> A;
-    vector<int> order;
-    order.push_back(0);
-    A.push_back(0);
-    for(int i = 1;i < N+1;i++){
+    int n,num;
+    cin>>n;
+    vector<int> lcs;
+    for(int i = 0;i < n;i++){
         cin>>num;
-        if(num > A.back()){
-            A.push_back(num);
-            order.push_back(A.size()-1);
+        if(lcs.empty() || lcs.back() < num){
+            lcs.push_back(num);
         }
         else{
-            for(int j = 1;j < A.size();j++){
-                if(num == A[j]){
-                    order.push_back(j);
-                    break;
-                }
-                else if(num < A[j]){
-                    A[j] = num;
-                    order.push_back(j);
-                    break;
-                }
-            }
+            int x = lower_bound(lcs.begin(),lcs.end(),num)-lcs.begin();
+            lcs[x] = num;
         }
     }
-    int maxi = 0;
-    for(int i = 0;i < order.size();i++){
-        if(maxi < order[i]){
-            maxi = order[i];
-        }
-    }
-    cout<<maxi;
+    cout<<lcs.size();
     return 0;
 }
