@@ -5,37 +5,34 @@
 using namespace std;
 
 int main(void){
-    int I,t,startx,starty,endx,endy;
-    int tx[9] = {-1,-1,1,1,-2,-2,2,2};
-    int ty[9] = {-2,2,-2,2,1,-1,-1,1};
+    int t,i,a,b,c,d;
+    int dx[9] = {-1,-1,1,1,-2,-2,2,2};
+    int dy[9] = {-2,2,-2,2,1,-1,-1,1};
     vector<vector<int>> chess;
-    queue<pair<int,int>> togo;
     cin>>t;
-    for(int s = 0;s < t;s++){
-        cin>>I;
-        chess.assign(I,vector<int>(I,999999999));
-        cin>>startx>>starty;
-        cin>>endx>>endy;
-        togo.push({startx,starty});
-        chess[startx][starty] = 0;
+    for(int l = 0;l < t;l++){
+        cin>>i;
+        chess.assign(i,vector<int>(i,0));
+        queue<pair<int,int>> togo;
+        cin>>a>>b;
+        cin>>c>>d;
+        chess[a][b] = 1;
+        togo.push({a,b});
         while(!togo.empty()){
             int x = togo.front().first;
             int y = togo.front().second;
             togo.pop();
-            if(x == endx && y == endy){
+            if(x == c && y == d){
                 break;
             }
-            for(int j = 0;j < 8;j++){
-                if(x+tx[j] >= 0 && x+tx[j] < I && y+ty[j] >= 0 && y+ty[j] < I && chess[x+tx[j]][y+ty[j]] == 999999999){
-                    chess[x+tx[j]][y+ty[j]] = min(chess[x][y] + chess[x+tx[j]][y+ty[j]],chess[x][y]+1);
-                    togo.push({x+tx[j],y+ty[j]});
-                }
+            for(int m = 0;m < 9;m++){
+                if(x+dx[m] >= 0 && x+dx[m] < i && y+dy[m] >= 0 && y+dy[m] < i && chess[x+dx[m]][y+dy[m]] == 0){
+                    chess[x+dx[m]][y+dy[m]] = chess[x][y] + 1;
+                    togo.push({x+dx[m],y+dy[m]});
+                }  
             }
         }
-        while(!togo.empty()){
-            togo.pop();
-        }
-        cout<<chess[endx][endy]<<endl;
+        cout<<chess[c][d]-1<<endl;
     }
     return 0;
 }
