@@ -4,40 +4,37 @@
 
 using namespace std;
 
-vector<int> city[300001];
-queue<int> q;
-vector<int> dist;
-
 int main(void){
-    int N,M,K,X,a,b;
-    cin>>N>>M>>K>>X;
-    dist.assign(N+1,987654321);
-    for(int i = 0;i < M;i++){
+    int n,m,k,x,a,b;
+    cin>>n>>m>>k>>x;
+    vector<int> city[n+1];
+    vector<int> visited(n+1,1000000000);
+    queue<int> togo;
+    for(int i = 0;i < m;i++){
         cin>>a>>b;
         city[a].push_back(b);
     }
-    q.push(X);
-    dist[X] = 0;
-    while(!q.empty()){
-        int now = q.front();
-        q.pop();
+    visited[x] = 0;
+    togo.push(x);
+    while(!togo.empty()){
+        int now = togo.front();
+        togo.pop();
         for(int i = 0;i < city[now].size();i++){
-            int next = city[now][i];
-            if(dist[next] > dist[now] +1){
-                dist[next] = dist[now]+1;
-                q.push(next);
+            if(visited[city[now][i]] > visited[now]+1){
+                visited[city[now][i]] = visited[now]+1;
+                togo.push(city[now][i]);
             }
         }
     }
-    bool check = false;
-    for(int i = 1;i < dist.size();i++){
-        if(dist[i] == K){
-            check = true;
-            cout<<i<<"\n";
+    bool no = true;
+    for(int i = 1;i < n+1;i++){
+        if(visited[i] == k){
+            no = false;
+            cout<<i<<endl;
         }
     }
-    if(check == false){
-        cout<<"-1\n";
+    if(no == true){
+        cout<<"-1";
     }
     return 0;
 }
