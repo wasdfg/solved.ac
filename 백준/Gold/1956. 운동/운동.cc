@@ -5,49 +5,35 @@
 using namespace std;
 
 int main(void){
-    int V,E,a,b,c,min = 987654321;
-    vector<pair<int,int>> graph[401];
-    cin>>V>>E;
-    vector<int> dist;
-    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-    vector<bool> visited;
-    for(int i = 0;i < E;i++){
+    int v,e,a,b,c,result = 200000000;
+    cin>>v>>e;
+    vector<vector<int>> graph(v,vector<int>(v,200000000));
+    for(int i = 0;i < e;i++){
         cin>>a>>b>>c;
-        graph[a].push_back({b,c});    
+        graph[a-1][b-1] = c;
     }
-    for(int i = 1;i <= V;i++){
-        pq.push({0,i});
-        dist.assign(V+1,987654321);
-        visited.assign(V+1,0);
-        while(!pq.empty()){
-            int cost = pq.top().first;
-            int cur = pq.top().second;
-            pq.pop();
-            if(visited[cur] == true){
-                continue;
-            }
-            if(cur == i && visited[cur] == true){
-                break;
-            }
-            visited[cur] = true;
-            for(int j = 0;j < graph[cur].size();j++){
-                int ncost = graph[cur][j].second;
-                int next = graph[cur][j].first;
-                if(cost+ncost < dist[next]){
-                    dist[next] = cost+ncost;
-                    pq.push({dist[next],next});
-                }
+    for(int i = 0;i < v;i++){
+        graph[i][i] = 0;
+    }
+    for(int k = 0;k < v;k++){
+        for(int i = 0;i < v;i++){
+            for(int j = 0;j < v;j++){
+                graph[i][j] = min(graph[i][k]+graph[k][j],graph[i][j]);
             }
         }
-        if(min > dist[i]){
-            min = dist[i];
+    }
+    for(int i = 0;i < v;i++){
+        for(int j = i+1;j < v;j++){
+            if(graph[i][j] != 200000000 && graph[j][i] != 200000000){
+                result = min(result,graph[i][j]+graph[j][i]);
+            }
         }
     }
-    if(min == 987654321){
-        cout<<"-1\n";
+    if(result >= 200000000){
+        cout<<"-1";
     }
     else{
-        cout<<min<<"\n";
+        cout<<result;
     }
     return 0;
 }
