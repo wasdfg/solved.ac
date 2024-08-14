@@ -4,26 +4,21 @@
 using namespace std;
 
 int main(void){
-    long long N,M,k,x,y;
-    cin>>N>>M>>k;
-    vector<vector<long long>> route(N,vector<long long>(M,1));
-    for(int i = 1;i < N;i++){
-        for(int j = 1;j < M;j++){
-            route[i][j] = route[i-1][j] + route[i][j-1];
+    int n,m,k,x,y;
+    cin>>n>>m>>k;
+    vector<vector<int>> grid(n,vector<int>(m,1));
+    x = (k-1)/m;
+    y = (k-1)%m;
+    for(int i = 1;i < n;i++){
+        for(int j = 1;j < m;j++){
+            grid[i][j] = grid[i][j-1]+grid[i-1][j];
         }
     }
-    if(k == 0)
-        cout<<route[N-1][M-1];
+    if(k == 0){
+        cout<<grid[n-1][m-1];
+    }
     else{
-        if(k%M != 0){
-			y=k%M;
-			x=k/M+1;
-		}
-		else{
-			x=k/M;
-			y=M;
-		}
-        cout<<route[x-1][y-1]*route[N-x][M-y];
+        cout<<grid[x][y]*grid[n-x-1][m-y-1];
     }
     return 0;
 }
