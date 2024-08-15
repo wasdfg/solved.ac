@@ -4,20 +4,19 @@
 using namespace std;
 
 int main(void){
-    int N,M,a,result = 1,num = 0;
-    cin>>N>>M;
-    vector<int> seat(N+1,1);
+    int n,m,a,result = 1,num = 0;
+    cin>>n>>m;
+    vector<int> seat(n+1,1);
     seat[1] = 1;
     seat[2] = 2;
-    for(int i = 3;i < N+1;i++){
+    for(int i = 3;i < n+1;i++){
         seat[i] = seat[i-1] + seat[i-2];
     }
-    for(int i = 0;i < M;i++){
+    for(int i = 0;i < m;i++){
         cin>>a;
-        result*=(seat[a-num-1]);
+        result*=seat[a-num-1];
         num = a;
     }
-    result*=(seat[N-num]);
-    cout<<result;
+    cout<<result*seat[n-num];
     return 0;
 }
