@@ -6,38 +6,43 @@
 using namespace std;
 
 int main(void){
-    int N,M,cost,count = 0;
+    int n,m,cost,count = 0,check = 0;
     vector<int> crane;
     vector<int> box;
-    cin>>N;
-    for(int i = 0;i < N;i++){
+    cin>>n;
+    for(int i = 0;i < n;i++){
         cin>>cost;
         crane.push_back(cost);
     }
-    cin>>M;
-    for(int i = 0;i < M;i++){
+    cin>>m;
+    for(int i = 0;i < m;i++){
         cin>>cost;
         box.push_back(cost);
     }
-    sort(crane.begin(),crane.end());
-    sort(box.begin(),box.end());
-    if(box.back() > crane.back()){
+    sort(crane.begin(),crane.end(),greater<int>());
+    sort(box.begin(),box.end(),greater<int>());
+    if(box[0] > crane[0]){
         cout<<"-1\n";
     }
     else{
-        while(!box.empty()){
-            count++;
-            for(int i = crane.size()-1;i >= 0;i--){
-                for(int j = box.size()-1;j >= 0;j--){
-                    if(crane[i] >= box[j]){
-                        box.erase(box.begin()+j);
-                        break;
-                    }
+        while(1){
+            int cranesize = 0;
+            for(int i = 0;i < box.size();i++){
+                if(cranesize >= crane.size()){
+                    break;
+                }
+                if(box[i] != 0 && crane[cranesize] >= box[i]){
+                    box[i] = 0;
+                    check++;
+                    cranesize++;
                 }
             }
+            count++;
+            if(check == m){
+                break;
+            }
         }
-        cout<<count++;
+        cout<<count;
     }
-    
     return 0;
 }
