@@ -4,17 +4,14 @@
 using namespace std;
 
 int main(void){
-    int N;
-    vector<int> dp;
-    cin>>N;
-    dp.assign(N,0);
+    int n;
+    cin>>n;
+    vector<int> dp(n,0);
     dp[0] = 3;
-    if(N > 1){
     dp[1] = 7;
-        for(int i = 2;i < N;i++){
-            dp[i] = (((dp[i-1] % 9901)*2 + (dp[i-2] % 9901)) % 9901); 
-        }
+    for(int i = 2;i < n;i++){
+        dp[i] = (dp[i-1]*2%9901)+dp[i-2]%9901;
     }
-    cout<<dp[N-1]%9901;
+    cout<<dp[n-1]%9901;
     return 0;
 }
