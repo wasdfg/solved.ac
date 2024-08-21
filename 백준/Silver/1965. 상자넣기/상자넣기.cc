@@ -5,32 +5,21 @@
 using namespace std;
 
 int main(void){
-    int n,num;
+    int n,result = 1;
     cin>>n;
-    vector<int> box;
-    vector<int> lis;
-    lis.push_back(0);
-    box.push_back(0);
-    for(int i = 1;i <= n;i++){
-        cin>>num;
-         if(num > box.back()){
-            box.push_back(num);
-            lis.push_back(box.size()-1);
-        }
-        else{
-            for(int j = 1;j < box.size();j++){
-                if(num == box[j]){
-                    lis.push_back(j);
-                    break;
-                }
-                else if(box[j] > num){
-                    box[j] = num;
-                    lis.push_back(j);
-                    break;
-                }
+    vector<int> num(n,0);
+    vector<int> dp(n,1);
+    for(int i = 0;i < n;i++){
+        cin>>num[i];
+    }
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < i;j++){
+            if(num[j] < num[i] && dp[i] < dp[j]+1){
+                dp[i] = dp[j]+1;
             }
         }
+        result = max(result,dp[i]);
     }
-    cout<<*max_element(lis.begin(),lis.end());
+    cout<<result;
     return 0;
 }
