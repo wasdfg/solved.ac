@@ -1,51 +1,44 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-#include<map>
+#include<queue>
 
 using namespace std;
 
-vector<int> togo[100000];
-vector<bool> visited;
-int result;
-
-int dfs(int x){
-    visited[x] = true;
-    result++;
-    for(int i = 0;i < togo[x].size();i++){
-        if(visited[togo[x][i]] == false){
-            dfs(togo[x][i]);
-        }
-    }
-    return 0;
-}
-
 int main(void){
-    int N,M,A,B;
-    cin>>N>>M;
-    vector<int> maxi;
-    for(int i = 0;i < M;i++){
-        cin>>A>>B;
-        togo[B-1].push_back(A-1);
+    int n,m,a,b,answer = 0;
+    cin>>n>>m;
+    vector<int> computer[n+1];
+    vector<int> visited(n+1,0);
+    vector<int> result(n+1,0);
+    for(int i = 0;i < m;i++){
+        cin>>a>>b;
+        computer[a].push_back(b);
     }
-    int check = 0;
-    for(int i = 0;i < N;i++){
-        visited.assign(N,0);
-        result = 0;
-        dfs(i);
-        if(check == result){
-            maxi.push_back(i+1);
+    for(int i = 1;i <= n;i++){
+        visited[i] = 1;
+        queue<int> togo;
+        togo.push(i);
+        while(!togo.empty()){
+            int x = togo.front();
+            togo.pop();
+            for(int i = 0;i < computer[x].size();i++){
+                if(visited[computer[x][i]] == 0){
+                    visited[computer[x][i]] = 1;
+                    result[computer[x][i]]++;
+                    togo.push(computer[x][i]);
+                }
+            }
         }
-        else if(check < result){
-            maxi.clear();
-            check = result;
-            maxi.push_back(i+1);
-        }
-
+        visited.assign(n+1,0);
     }
-    sort(maxi.begin(),maxi.end());
-    for(int i = 0;i < maxi.size();i++){
-            cout<<maxi[i]<<" ";
+    for(int i = 1;i <= n;i++){
+        answer = max(answer,result[i]);
+    }
+    for(int i = 1;i <= n;i++){
+        if(result[i] == answer){
+            cout<<i<<" ";
+        }
     }
     return 0;
 }
