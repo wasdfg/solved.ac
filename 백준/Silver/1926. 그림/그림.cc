@@ -4,49 +4,48 @@
 
 using namespace std;
 
-vector<vector<int>> board;
-vector<vector<bool>> visited;
-int pic,n,m;
-int dx[4] = {0,0,-1,1};
-int dy[4] = {-1,1,0,0};
-
-int dfs(int x,int y){
-    pic++;
-    visited[x][y] = 1;
-    for(int i = 0;i < 4;i++){
-        if(x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < m && visited[x+dx[i]][y+dy[i]] == 0 && board[x+dx[i]][y+dy[i]] == 1){
-            dfs(x+dx[i],y+dy[i]);
-        }
-    }
-    return 0;
-}
-
 int main(void){
+    int n,m;
     cin>>n>>m;
-    priority_queue<int> group;
-    board.assign(n,vector<int>(m,0));
-    visited.assign(n,vector<bool>(m,0));
+    vector<vector<int>> paint(n,vector<int>(m,0));
+    vector<vector<bool>> visited(n,vector<bool>(m,0));
+    int dx[4] = {0,0,-1,1};
+    int dy[4] = {1,-1,0,0};
+    priority_queue<int> area;
     for(int i = 0;i < n;i++){
         for(int j = 0;j < m;j++){
-            cin>>board[i][j];
+            cin>>paint[i][j];
         }
     }
-    
     for(int i = 0;i < n;i++){
         for(int j = 0;j < m;j++){
-            if(board[i][j] == 1 && visited[i][j] == 0){
-                pic = 0;
-                dfs(i,j);
-                group.push(pic);
+            int check = 0;
+            if(paint[i][j] == 1 && visited[i][j] == 0){
+                visited[i][j] = 1;
+                check = 1;
+                queue<pair<int,int>> togo;
+                togo.push({i,j});
+                while(!togo.empty()){
+                    int x = togo.front().first;
+                    int y = togo.front().second;
+                    togo.pop();
+                    for(int k = 0;k < 4;k++){
+                        if(x+dx[k] >= 0 && x+dx[k] < n && y+dy[k] >= 0 && y+dy[k] < m && paint[x+dx[k]][y+dy[k]] == 1 && visited[x+dx[k]][y+dy[k]] == 0){
+                            visited[x+dx[k]][y+dy[k]] = 1;
+                            check++;
+                            togo.push({x+dx[k],y+dy[k]});
+                        }
+                    }
+                }
+                area.push(check);
             }
         }
     }
-    cout<<group.size()<<endl;
-    if(group.empty()){
-        cout<<"0";
+    if(area.empty()){
+        cout<<"0\n0";
     }
     else{
-        cout<<group.top();
+        cout<<area.size()<<"\n"<<area.top();
     }
     return 0;
 }
