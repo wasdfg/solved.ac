@@ -1,38 +1,39 @@
 #include<iostream>
 #include<vector>
-#include<algorithm>
 
 using namespace std;
 
 int main(void){
-    int l,r = 0,mid,n,m;
+    int n,m,left = 1,right,mid,count,check,result = 0;
     cin>>n>>m;
     vector<int> guitar(n,0);
     for(int i = 0;i < n;i++){
         cin>>guitar[i];
-        r+=guitar[i];
+        result+=guitar[i];
+        left = max(guitar[i],left);
     }
-    l = *max_element(guitar.begin(),guitar.end());
-    while(l <= r){
-        mid = (l+r)/2;
-        int total = 0,check = 0;
+    right = result;
+    while(left <= right){
+        mid = (left+right)/2;
+        count = 0;
+        check = 0;
         for(int i = 0;i < n;i++){
-            if(total+guitar[i] > mid){
-                total = 0;
-                check++;
+            if(check+guitar[i] > mid){
+                count++;
+                check = 0;
             }
-            total+=guitar[i];
+            check+=guitar[i];
         }
-        if(total != 0){
-            check++;
+        if(check > 0){
+            count++;
         }
-        if(check > m){
-            l = mid+1;
+        if(count <= m){
+            right = mid-1; 
         }
         else{
-            r = mid-1;
+            left = mid+1;
         }
     }
-    cout<<l;
+    cout<<left;
     return 0;
 }
