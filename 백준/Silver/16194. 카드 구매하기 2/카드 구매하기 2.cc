@@ -1,6 +1,5 @@
 #include<iostream>
 #include<vector>
-#include<algorithm>
 
 using namespace std;
 
@@ -15,7 +14,7 @@ int main(void){
     for(int i = 1;i <= n;i++){
         dp[i] = card[i];
         for(int j = 1;j <= i;j++){
-            dp[i] = min(dp[i],dp[i-j]+dp[j]);
+            dp[i] = min(dp[i],card[j]+dp[i-j]);
         }
     }
     cout<<dp[n];
