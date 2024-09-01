@@ -1,64 +1,63 @@
 #include<iostream>
 #include<vector>
+#include<queue>
 
 using namespace std;
-int N,M,white = 0,black = 0,check;
-bool notw = 0;
-vector<vector<int>> war;
-vector<vector<bool>> visited;
-int dx[4] = {0,0,-1,1};
-int dy[4] = {1,-1,0,0};
-
-int dfs(int x,int y){
-    visited[x][y] = 1;
-    check++;
-    for(int i = 0;i < 4;i++){
-        if(x+dx[i] >= 0 && x+dx[i] < M && y+dy[i] >= 0 && y+dy[i] < N && visited[x+dx[i]][y+dy[i]] == 0){
-            if(notw == true && war[x+dx[i]][y+dy[i]] == 1){
-                dfs(x+dx[i],y+dy[i]);
-            }
-            else if(notw == false && war[x+dx[i]][y+dy[i]] == 0){
-                dfs(x+dx[i],y+dy[i]);
-            }
-        }
-    }
-    return 0;
-}
 
 int main(void){
+    int dx[4] = {0,0,-1,1};
+    int dy[4] = {1,-1,0,0};
+    int n,m,white = 0,blue = 0,check;
+    bool notw = 0;
     char a;
-    cin>>N>>M;
-    war.assign(M,vector<int>(N,0));
-    visited.assign(M,vector<bool>(N,0));
-    for(int i = 0;i < M;i++){
-        for(int j = 0;j < N;j++){
+    cin>>n>>m;
+    vector<vector<int>> war(m,vector<int>(n,0));
+    vector<vector<bool>> visited(m,vector<bool>(n,0));
+    for(int i = 0;i < m;i++){
+        for(int j = 0;j < n;j++){
             cin>>a;
             if(a == 'W'){
-                war[i][j] = 0;
+                war[i][j] = 0; 
             }
             else{
                 war[i][j] = 1;
             }
         }
     }
-    for(int i = 0;i < M;i++){
-        for(int j = 0;j < N;j++){
+    for(int i = 0;i < m;i++){
+        for(int j = 0;j < n;j++){
             if(visited[i][j] == 0){
-                check = 0;
+                check = 1;
+                visited[i][j] = 1;
                 if(war[i][j] == 1){
                     notw = 1;
                 }
-                dfs(i,j);
-                if(notw == 1){
-                    black+=(check*check);
-                }
                 else{
+                    notw = 0;
+                }
+                queue<pair<int,int>> togo;
+                togo.push({i,j});
+                while(!togo.empty()){
+                    int x = togo.front().first;
+                    int y = togo.front().second;
+                    togo.pop();               
+                    for(int k = 0;k < 4;k++){
+                        if(x+dx[k] >= 0 && x+dx[k] < m && y+dy[k] >= 0 && y+dy[k] < n && war[x+dx[k]][y+dy[k]] == notw && visited[x+dx[k]][y+dy[k]] == 0){
+                            visited[x+dx[k]][y+dy[k]] = 1;
+                            check++;
+                            togo.push({x+dx[k],y+dy[k]});
+                        }
+                    }
+                }
+                if(notw == 0){
                     white+=(check*check);
                 }
-                notw = 0;
+                else{
+                    blue+=(check*check);
+                } 
             }
         }
     }
-    cout<<white<<" "<<black;
+    cout<<white<<" "<<blue;
     return 0;
 }
