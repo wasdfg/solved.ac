@@ -4,15 +4,26 @@
 
 using namespace std;
 
+int m,n;
+bool noelec = true;
+int dx[4] = {0,0,-1,1};
+int dy[4] = {1,-1,0,0};
+vector<vector<int>> perc;
+vector<vector<bool>> visited;
+
+void dfs(int x,int y){
+    for(int i = 0;i < 4;i++){
+        if(x+dx[i] >= 0 && x+dx[i] < m && y+dy[i] >= 0 && y+dy[i] < n && visited[x+dx[i]][y+dy[i]] == 0 && perc[x+dx[i]][y+dy[i]] == 0){
+            visited[x+dx[i]][y+dy[i]] = 1;
+            dfs(x+dx[i],y+dy[i]);
+        }
+    }
+}
+
 int main(void){
-    int m,n;
-    bool noelec = true;
-    int dx[4] = {0,0,-1,1};
-    int dy[4] = {1,-1,0,0};
     cin>>m>>n;
-    vector<vector<int>> perc(m,vector<int>(n,0));
-    vector<vector<bool>> visited(m,vector<bool>(n,0));
-    priority_queue<pair<int,int>> togo;
+    perc.assign(m,vector<int>(n,0));
+    visited.assign(m,vector<bool>(n,0));
     for(int i = 0;i < m;i++){
         for(int j = 0;j < n;j++){
             scanf("%1d",&perc[i][j]);
@@ -21,20 +32,7 @@ int main(void){
     for(int i = 0;i < n;i++){
         if(perc[0][i] == 0 && visited[0][i] == 0){
             visited[0][i] = 1;
-            togo.push({0,i});
-            while(!togo.empty()){
-                int x = togo.top().first;
-                int y = togo.top().second;
-                togo.pop();
-                for(int j = 0;j < 4;j++){
-                    if(x+dx[j] >= 0 && x+dx[j] < m && y+dy[j] >= 0 && y+dy[j] < n){
-                        if(perc[x+dx[j]][y+dy[j]] == 0 && visited[x+dx[j]][y+dy[j]] == 0){
-                            visited[x+dx[j]][y+dy[j]] = 1;
-                            togo.push({x+dx[j],y+dy[j]});
-                        }
-                    }
-                }
-            }
+            dfs(0,i);
         }
     }
     for(int i = 0;i < n;i++){
