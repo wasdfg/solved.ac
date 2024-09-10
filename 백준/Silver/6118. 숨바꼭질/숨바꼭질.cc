@@ -5,8 +5,9 @@
 using namespace std;
 
 int main(void){
-    int n,m,a,b,check = 0,result,far = 0;
+    int n,m,a,b,check = 0,far = 50001,count = 0;
     cin>>n>>m;
+    far = n-1;
     vector<int> has[n];
     vector<bool> visited(n,0);
     vector<int> barn(n,0);
@@ -19,29 +20,26 @@ int main(void){
     togo.push({0,0});
     visited[0] = 1;
     while(!togo.empty()){
-        int x = togo.front().first;
+        int now = togo.front().first;
         int cost = togo.front().second;
         togo.pop();
-        if(x != 0){
-            barn[x] = cost;
-        }
-        for(int j = 0;j < has[x].size();j++){
-            if(visited[has[x][j]] == 0){
-                visited[has[x][j]] = 1;
-                togo.push({has[x][j],cost+1});
+        for(int i = 0;i < has[now].size();i++){
+            if(visited[has[now][i]] == 0){
+                barn[has[now][i]] = cost+1;
+                visited[has[now][i]] = 1;
+                if(barn[has[now][i]] > check){
+                    check = barn[has[now][i]];
+                }
+                togo.push({has[now][i],cost+1});
             }
         }
     }
-    for(int i = 1;i < n;i++){
-        if(barn[i] > far){
-            check = i+1;
-            result = 1;
-            far = barn[i]; 
-        }
-        else if(barn[i] == far){
-            result++;
+    for(int i = 0;i < barn.size();i++){
+        if(barn[i] == check){
+            far = min(far,i+1);
+            count++;
         }
     }
-    cout<<check<<" "<<far<<" "<<result;
+    cout<<far<<" "<<barn[far-1]<<" "<<count;
     return 0;
 }
