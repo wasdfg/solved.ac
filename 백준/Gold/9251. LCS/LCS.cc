@@ -17,11 +17,10 @@ int main(void){
             else{
                 lcs[i][j] = max(lcs[i-1][j],lcs[i][j-1]);
             }
-            if(lcs[i][j] > result){
-                result = lcs[i][j];
-            }
         }
     }
-    cout<<result;
+    int x = a.length();
+    int y = b.length();
+    cout<<lcs[x][y];
     return 0;
 }
