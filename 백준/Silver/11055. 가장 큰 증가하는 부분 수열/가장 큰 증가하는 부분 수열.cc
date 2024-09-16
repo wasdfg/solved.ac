@@ -10,17 +10,15 @@ int main(void){
     vector<int> dp(n,0);
     for(int i = 0;i < n;i++){
         cin>>num[i];
+        dp[i] = num[i];
     }
     for(int i = 0;i < n;i++){
-        dp[i] = num[i];
         for(int j = 0;j < i;j++){
-            if(num[i] > num[j] && dp[i] < num[i]+dp[j]){
-                dp[i] = dp[j] + num[i];
+            if(num[i] > num[j] && dp[i] < dp[j]+num[i]){
+                dp[i] = dp[j]+num[i];
             }
         }
-        if(result < dp[i]){
-            result = dp[i];
-        }
+        result = max(dp[i],result);
     }
     cout<<result;
     return 0;
