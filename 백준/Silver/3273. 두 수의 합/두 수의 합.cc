@@ -20,15 +20,15 @@ int main(void){
             start++;
             end--;
         }
-        if(num[start]+num[end] < x){
-            start++;
-        }
         else if(num[start]+num[end] > x){
             end--;
         }
+        else{
+            start++;
+        }
     }
     if(n == 1){
-        cout<<0;
+        cout<<"0";
     }
     else{
         cout<<count;
