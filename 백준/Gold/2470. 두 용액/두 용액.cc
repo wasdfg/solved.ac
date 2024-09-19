@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(void){
-    int n,s = 0,e,x,y,check = 2100000000;
+    int n,s = 0,e,x,y,check = 2000000001;
     cin>>n;
     e = n-1;
     vector<int> liq(n,0);
@@ -14,12 +14,12 @@ int main(void){
     }
     sort(liq.begin(),liq.end());
     while(s < e){
-        if(abs(liq[e]+liq[s]) < check){
+        if(abs(liq[s]+liq[e]) < check){
             x = liq[s];
             y = liq[e];
-            check = abs(liq[e]+liq[s]);
+            check = abs(liq[s]+liq[e]);
         }
-        if(liq[e]+liq[s] < 0){
+        if(liq[s]+liq[e] < check){
             s++;
         }
         else{
