@@ -4,27 +4,32 @@
 using namespace std;
 
 vector<bool> isprime(4000001,1);
-vector<int> check;
 
 int main(void){
-    int N,start = 0,end = 0,sum,result = 0;
-    cin>>N;
+    int n,start = 0,end = 0,sum,result = 0;
+    vector<int> check;
+    cin>>n;
     isprime[0] = 0;
     isprime[1] = 0;
-    for(int i = 2;i <= 4000000;i++){
-        if(isprime[i] == 1){
-            check.push_back(i);
+    if(n > 1){
+        for(int i = 2;i <= n;i++){
+            if(isprime[i] == 1){
+                check.push_back(i);
+            }
+            for(int j = 2;i * j <= n;j++){
+                isprime[i*j] = 0;
+            }
         }
-        for(int j = 2;j * i <= 4000000;j++){
-            isprime[j*i] = 0;
-        }
+        sum = check[0];
     }
-    sum = check.front();
+    else{
+        sum = 0;
+    }
     while(start <= end && end < check.size()){
-        if(sum == N){
+        if(sum == n){
             result++;
         }
-        if(sum > N){
+        if(sum >= n){
             sum-=check[start];
             start++;
         }
