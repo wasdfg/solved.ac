@@ -22,8 +22,7 @@ int main(void){
         }
         if(check <= m){
             result = mid;
-            start = mid+1;
-            
+            start = mid+1; 
         }
         else{
             end = mid-1;
