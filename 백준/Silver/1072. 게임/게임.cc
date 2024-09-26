@@ -4,17 +4,15 @@
 using namespace std;
 
 int main(void){
-    long long x,y,left,mid,right,win;
+    long long x,y,left = 0,right = 1000000000,win;
     cin>>x>>y;
     if((y * 100 / x) >= 99){
         cout<<-1;
     }
     else{
-        left = 0;
-        right = 1000000000;
         win = y * 100 / x;
         while(left <= right){
-            mid = (right + left)/2;
+            long long mid = (right + left)/2;
             if((y+mid)*100/(x+mid) > win){
                 right = mid-1;
             }
