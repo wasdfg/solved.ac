@@ -4,35 +4,35 @@
 using namespace std;
 
 int main(void){
-    int n,m,left = 1,right = 0,mid,count,check,result;
+    int n,m,start = 1,end = 0,count,left,result;
     cin>>n>>m;
     vector<int> money(n,0);
     for(int i = 0;i < n;i++){
         cin>>money[i];
-        right+=money[i];
+        end+=money[i];
     }
-    while(left <= right){
-        bool no = 1;
-        mid = (left+right) / 2;
-        check = mid;
+    while(start <= end){
         count = 1;
+        bool cant = false;
+        int mid = (start+end)/2;
+        left = mid;
         for(int i = 0;i < n;i++){
-            if(mid < money[i]){
-                no = 0;
+            if(money[i] > mid){
+                cant = true;
                 break;
             }
-            if(check < money[i]){
-                check = mid;
+            if(left < money[i]){
                 count++;
+                left = mid;
             }
-            check-=money[i];
+            left-=money[i];
         }
-        if(count > m || no == 0){
-            left = mid + 1;
+        if(cant || count > m){
+            start = mid+1;
         }
         else{
             result = mid;
-            right = mid - 1;
+            end = mid-1;
         }
     }
     cout<<result;
