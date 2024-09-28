@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(void){
-    int n,c,left,right,mid,check,result,setwifi;
+    int n,c,left,right,check,result = 0,gap;
     cin>>n>>c;
     vector<int> wifi(n,0);
     for(int i = 0;i < n;i++){
@@ -13,19 +13,19 @@ int main(void){
     }
     sort(wifi.begin(),wifi.end());
     left = 1;
-    right = wifi.back();
+    right = wifi[n-1]-wifi[0];
     while(left <= right){
-        mid = (left + right) / 2;
         check = 1;
-        setwifi = wifi[0];
-        for(int i = 1;i < n;i++){
-            if(wifi[i] >= setwifi + mid){
+        gap = wifi[0];
+        int mid = (left+right)/2;
+        for(int i = 0;i < n;i++){
+            if(wifi[i] - gap >= mid){
                 check++;
-                setwifi = wifi[i];
+                gap = wifi[i];
             }
         }
         if(check >= c){
-            result = mid;
+            result = max(result,mid);
             left = mid+1;
         }
         else{
