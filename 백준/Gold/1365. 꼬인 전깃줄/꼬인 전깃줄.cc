@@ -5,20 +5,17 @@
 using namespace std;
 
 int main(void){
-    int n;
+    int n,num;
     cin>>n;
-    vector<int> elc(n,0);
     vector<int> lis;
     for(int i = 0;i < n;i++){
-        cin>>elc[i];
-    }
-    for(int i = 0;i < n;i++){
-        if(lis.empty() || lis.back() < elc[i]){
-            lis.push_back(elc[i]);
+        cin>>num;
+        if(lis.empty() || lis.back() < num){
+            lis.push_back(num);
         }
         else{
-            int x = lower_bound(lis.begin(),lis.end(),elc[i])-lis.begin();
-            lis[x] = elc[i];
+            int x = lower_bound(lis.begin(),lis.end(),num)-lis.begin();
+            lis[x] = num;
         }
     }
     cout<<n-lis.size();
