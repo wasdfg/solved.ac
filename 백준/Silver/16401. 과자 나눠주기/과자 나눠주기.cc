@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(void){
-    long long m,n,left,right,sum = 0,count,check = 0;
+    long long m,n,left,right,sum = 0,count,result = 0;
     cin>>m>>n;
     vector<long long> snack(n,0);
     for(int i = 0;i < n;i++){
@@ -24,10 +24,10 @@ int main(void){
             right = mid-1;
         }
         else{
-            check = mid;
+            result = mid;
             left = mid+1;
         }
     }
-    cout<<check;
+    cout<<result;
     return 0;
 }
