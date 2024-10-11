@@ -1,28 +1,29 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#define ull unsigned long long
 
 using namespace std;
 
 int main(void){
-    unsigned long long n,m,left,right,count,result = 1e+19;
+    ull n,m,left,right,result = 0;
     cin>>n>>m;
-    vector<unsigned long long> ent(n,0);
+    vector<ull> cp(n,0);
     for(int i = 0;i < n;i++){
-        cin>>ent[i];
+        cin>>cp[i];
     }
-    sort(ent.begin(),ent.end());
+    sort(cp.begin(),cp.end());
     left = 1;
-    right = ent.back()*m;
+    right = m*cp[n-1];
     while(left <= right){
-        count = 0;
-        unsigned long long mid = (left+right)/2;
+        ull mid = (left+right)/2;
+        ull check = 0;
         for(int i = 0;i < n;i++){
-            count+=(mid/ent[i]);
+            check+=(mid/cp[i]);
         }
-        if(count >= m){
+        if(check >= m){
             right = mid-1;
-            result = min(mid,result);
+            result = mid;
         }
         else{
             left = mid+1;
