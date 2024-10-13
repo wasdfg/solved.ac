@@ -5,27 +5,32 @@
 using namespace std;
 
 int main(void){
-    int n,h,result = 200001,value = 0;
+    int n,h,x,count = 0,result = 200001;
     cin>>n>>h;
-    vector<int> even(n/2,0);
-    vector<int> odd(n/2,0);
-    for(int i = 0;i < n/2;i++){
-        cin>>odd[i]>>even[i];
+    vector<int> top(h+1,0);
+    vector<int> bottom(h+1,0);
+    for(int i = 0;i < n;i++){
+        cin>>x;
+        if(i % 2 == 0){
+            bottom[x]++;
+        }
+        else{
+            top[h-x+1]++;
+        }
     }
-    sort(odd.begin(),odd.end());
-    sort(even.begin(),even.end());
     for(int i = 1;i <= h;i++){
-        int check = lower_bound(odd.begin(),odd.end(),i)-odd.begin();
-        check+=upper_bound(even.begin(),even.end(),h-i)-even.begin();
-        check = n-check;
-        if(check == result){
-            value++;
+        top[i]+=top[i-1];
+        bottom[h-i]+=bottom[h-i+1];
+    }
+    for(int i = 1;i <= h;i++){
+        if(top[i]+bottom[i] < result){
+            count = 1;
+            result = top[i]+bottom[i];
         }
-        else if(check < result){
-            result = check;
-            value = 1;
+        else if(top[i]+bottom[i] == result){
+            count++;
         }
     }
-    cout<<result<<" "<<value;
+    cout<<result<<" "<<count;
     return 0;
 }
