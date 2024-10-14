@@ -9,8 +9,8 @@ int main(void){
     vector<int> robo;
     while(cin>>x){
         int l1 = 0,l2 = 0;
-        cin>>n;
         x*=10000000;
+        cin>>n;
         robo.assign(n,0);
         for(int i = 0;i < n;i++){
             cin>>robo[i];
@@ -18,22 +18,21 @@ int main(void){
         sort(robo.begin(),robo.end());
         left = 0;
         right = n-1;
-        bool check = false; 
         while(left < right){
             if(robo[left]+robo[right] == x){
-                l1 = robo[left];
-                l2 = robo[right];
-                check =true;
-                break;
+                if(abs(l2-l1) <= abs(robo[right]-robo[left])){
+                    l2 = robo[right];
+                    l1 = robo[left];
+                }
             }
-            else if(robo[left]+robo[right] > x){
+            if(robo[left]+robo[right] >= x){
                 right--;
             }
             else{
                 left++;
             }
         }
-        if(check == false){
+        if(l1 == 0 && l2 == 0){
             cout<<"danger\n";
         }
         else{
