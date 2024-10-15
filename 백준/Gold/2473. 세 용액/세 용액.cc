@@ -13,22 +13,22 @@ int main(void){
     }
     sort(liq.begin(),liq.end());
     for(int i = 0;i < n-2;i++){
-            left = i+1;
-            right = n-1;
-            while(left < right){
-                if(abs(liq[i]+liq[left]+liq[right]) < check){
-                    a = liq[i];
-                    b = liq[left];
-                    c = liq[right];
-                    check = abs(liq[i]+liq[left]+liq[right]);
-                }
-                if(liq[i]+liq[left]+liq[right] > 0){
-                    right--;
-                }
-                else{
-                    left++;
-                }
+        left = i+1;
+        right = n-1;
+        while(left < right){
+            if(abs(liq[i]+liq[left]+liq[right]) < check){
+                a = liq[i];
+                b = liq[left];
+                c = liq[right];
+                check = abs(liq[i]+liq[left]+liq[right]);
             }
+            if(liq[i]+liq[left]+liq[right] > 0){
+                right--;
+            }
+            else{
+                left++;
+            }
+        }
     }
     cout<<a<<" "<<b<<" "<<c;
     return 0;
