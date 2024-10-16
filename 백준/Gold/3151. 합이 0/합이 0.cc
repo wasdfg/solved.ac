@@ -13,11 +13,12 @@ int main(void){
         cin>>prog[i];
     }
     stable_sort(prog.begin(),prog.end());
-    for(int i = 0;i < n-2;i++){
-        for(int j = i+1;j < n-1;j++){
-            left = lower_bound(prog.begin()+j+1,prog.end(),-prog[i]-prog[j])-prog.begin();
-            right = upper_bound(prog.begin()+j+1,prog.end(),-prog[i]-prog[j])-prog.begin();
-            count+=(right-left);
+    for(int i = 0;i < n-1;i++){
+        for(int j = i+1;j < n;j++){
+            int check = prog[i]+prog[j];
+            int x = lower_bound(prog.begin()+j+1,prog.end(),-check) - prog.begin();
+            int y = upper_bound(prog.begin()+j+1,prog.end(),-check) - prog.begin();
+            count+=(y-x);
         }
     }
     cout<<count;
