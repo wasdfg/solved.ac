@@ -1,6 +1,5 @@
 #include<iostream>
 #include<queue>
-#include<algorithm>
 
 using namespace std;
 
@@ -15,12 +14,17 @@ int main(void){
                 cout<<"0\n";
             }
             else{
-                cout<<pq.top().first*pq.top().second<<endl;
+                cout<<pq.top().first*pq.top().second<<"\n";
                 pq.pop();
             }
         }
         else{
-            pq.push({abs(x),x > 0?1:-1});
+            if(x > 0){
+                pq.push({x,1});
+            }
+            else{
+                pq.push({x*-1,-1});
+            }
         }
     }
     return 0;
