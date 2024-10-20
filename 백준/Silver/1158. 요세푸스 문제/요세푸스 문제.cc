@@ -13,20 +13,20 @@ int main(void){
     cout<<"<";
     while(!yose.empty()){
         count++;
-        int now = yose.front();
+        int x = yose.front();
         if(count == k){
-            if(yose.size() == 1){
-                cout<<now;
+            if(yose.size() != 1){
+                cout<<x<<", ";
             }
             else{
-                cout<<now<<", ";
+                cout<<x;
             }
             count = 0;
             yose.pop();
         }
         else{
             yose.pop();
-            yose.push(now);
+            yose.push(x);
         }
     }
     cout<<">";
