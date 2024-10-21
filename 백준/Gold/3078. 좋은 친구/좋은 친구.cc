@@ -6,6 +6,9 @@
 using namespace std;
 
 int main(void){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
     long long n,k,count = 0,check;
     string name;
     vector<int> len(20,0);
