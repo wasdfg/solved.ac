@@ -7,31 +7,27 @@
 using namespace std;
 
 int main(void){
-    int n,scount = 0,lcount = 0;
-    string s,L;
+    int n;
+    bool check = false;
+    string s,l,tmp;
     cin>>n;
-    cin.ignore(5,'\n');
-    vector<queue<string>> word(n);
+    cin.ignore();
+    vector<queue<string>> parrot(n);
     for(int i = 0;i < n;i++){
         getline(cin,s);
-        istringstream ss(s);
-        string str_buf;
-        while(getline(ss,str_buf,' ')){
-            word[i].push(str_buf);
-            scount++;
+        stringstream ss(s);
+        while(ss >> tmp){
+            parrot[i].push(tmp);
         }
     }
-    getline(cin,L);
-    istringstream ss(L);
-    string str_buf;
-    bool check;
-    while(getline(ss,str_buf,' ')){
+    getline(cin,l);
+    stringstream ss(l);
+    while(ss >> tmp){
         check = false;
-        lcount++;
         for(int i = 0;i < n;i++){
-            if(!word[i].empty() && word[i].front().compare(str_buf) == 0){
-                word[i].pop();
+            if(!parrot[i].empty() && tmp == parrot[i].front()){
                 check = true;
+                parrot[i].pop();
                 break;
             }
         }
@@ -40,11 +36,12 @@ int main(void){
             return 0;
         }
     }
-    if(lcount != scount){
-        cout<<"Impossible";
+    for(int i = 0;i < n;i++){
+        if(!parrot[i].empty()){
+            cout<<"Impossible";
+            return 0;
+        }
     }
-    else{
-        cout<<"Possible";
-    }
+    cout<<"Possible";
     return 0;
 }
