@@ -5,18 +5,18 @@
 using namespace std;
 
 int main(void){
-    ull s,k,result = 1,rest,count = 0;
+    ull s,k,result = 1;
     cin>>s>>k;
     vector<ull> num(k,s/k);
-    rest = s-s/k*k;
-    for(int i = 0;i < s/k*k;i++){
-        if(count == rest){
+    s = s % k;
+    for(int i = 0;i < num.size();i++){
+        if(s == 0){
             break;
         }
         num[i]++;
-        count++;
+        s--;
     }
-    for(int i = 0;i < k;i++){
+    for(int i = 0;i < num.size();i++){
         result*=num[i];
     }
     cout<<result;
