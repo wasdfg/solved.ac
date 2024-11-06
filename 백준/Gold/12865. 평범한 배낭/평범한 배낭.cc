@@ -3,23 +3,19 @@
 
 using namespace std;
 
-vector<vector<int>> dp;
-vector<int> weight;
-vector<int> value;
-
 int main(void){
     int n,k;
     cin>>n>>k;
-    weight.assign(n+1,0);
-    value.assign(n+1,0);
-    dp.assign(n+1,vector<int>(k+1,0));
-    for(int i = 1;i <= n;i++){
+    vector<int> weight(n,0);
+    vector<int> value(n,0);
+    vector<vector<int>> dp(n+1,vector<int>(k+1,0));
+    for(int i = 0;i < n;i++){
         cin>>weight[i]>>value[i];
     }
-    for(int i = 1;i <= n;i++){
-        for(int j = 1;j <= k;j++){
-            if(j >= weight[i]){
-                dp[i][j] = max(dp[i-1][j],dp[i-1][j-weight[i]]+value[i]);
+    for(int i = 1;i < n+1;i++){
+        for(int j = 1;j < k+1;j++){
+            if(j >= weight[i-1]){
+                dp[i][j] = max(dp[i-1][j],dp[i-1][j-weight[i-1]]+value[i-1]);
             }
             else{
                 dp[i][j] = dp[i-1][j];
