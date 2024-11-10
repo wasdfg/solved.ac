@@ -13,8 +13,8 @@ int main(void){
     }
     dp[0] = 0;
     for(int i = 0;i < n;i++){
-        for(int j = coin[i];j <= k;j++){
-            dp[j] = min(dp[j],dp[j-coin[i]]+1);
+        for(int j = coin[i];j < k+1;j++){
+            dp[j] = min(dp[j-coin[i]]+1,dp[j]);
         }
     }
     if(dp[k] == 100001){
