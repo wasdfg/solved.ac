@@ -12,34 +12,34 @@ int main(void){
         cin>>a>>b;
         queue<pair<int,string>> q;
         q.push({a,""});
-        visited[a] = true;
+        visited[a] = 1;
         while(!q.empty()){
             int now = q.front().first;
-            string dslr = q.front().second;
+            string cam = q.front().second;
             q.pop();
             if(now == b){
-                cout<<dslr<<endl;
+                cout<<cam<<endl;
                 break;
             }
             int d = now * 2 % 10000;
-            if(!visited[d]){
+            if(visited[d] == 0){
+                q.push({d,cam+'D'});
                 visited[d] = 1;
-                q.push({d,dslr+"D"});
             }
-            int s = now == 0?9999:now-1;
-            if(!visited[s]){
+            int s = now-1 >= 0?now-1:9999;
+            if(visited[s] == 0){
+                q.push({s,cam+'S'});
                 visited[s] = 1;
-                q.push({s,dslr+"S"});
             }
-            int l = (now % 1000)*10+(now/1000);
-            if(!visited[l]){
+            int l = now % 1000 * 10 + now / 1000;
+            if(visited[l] == 0){
+                q.push({l,cam+'L'});
                 visited[l] = 1;
-                q.push({l,dslr+"L"});
             }
-            int r = (now / 10)+((now % 10) * 1000);
-            if(!visited[r]){
+            int r = now % 10 * 1000 + now / 10;
+            if(visited[r] == 0){
+                q.push({r,cam+'R'});
                 visited[r] = 1;
-                q.push({r,dslr+"R"});
             }
         }
     }
