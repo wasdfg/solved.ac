@@ -4,45 +4,42 @@
 
 using namespace std;
 
-vector<vector<int>> leaf;
+int n,result,no;
+vector<int> graph[50];
+
+void dfs(int now){
+    if(now == no){
+        return ;
+    }
+    bool check = true;
+    for(int i = 0;i < graph[now].size();i++){
+        if(graph[now][i] == no){
+            continue;
+        }
+        check = false;
+        dfs(graph[now][i]);
+    }
+    if(check){
+        result++;
+    }
+}
 
 int main(void){
-    int n,x,cut,head,child,answer = 0;
+    int x,start;
     cin>>n;
-    leaf.resize(n,vector<int>());
-    vector<bool> visited(n,0);
-    queue<int> togo;
     for(int i = 0;i < n;i++){
         cin>>x;
-        if(x != -1){
-            leaf[x].push_back(i);
+        if(x == -1){
+            start = i;
         }
         else{
-            head = i;
+            graph[x].push_back(i);
         }
     }
-    cin>>cut;
-    togo.push(head);
-    visited[head] = 1;
-    visited[cut] = 1;
-    while(!togo.empty()){
-        int next = togo.front();
-        togo.pop();
-        child = 0;
-        for(int i = 0;i < leaf[next].size();i++){
-            if(visited[leaf[next][i]] == 0){
-                child++;
-                visited[leaf[next][i]] = 1;
-                togo.push(leaf[next][i]);
-            }
-        }
-        if(child == 0){
-            answer++;
-        }
+    cin>>no; 
+    if(start != no){
+        dfs(start);
     }
-    if(head == cut){
-        answer = 0;
-    }
-    cout<<answer;
+    cout<<result;
     return 0;
 }
