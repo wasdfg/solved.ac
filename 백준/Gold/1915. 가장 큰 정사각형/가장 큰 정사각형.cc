@@ -17,11 +17,9 @@ int main(void){
         for(int j = 1;j < m+1;j++){
             if(square[i][j] == 1){
                 square[i][j] = min({square[i-1][j],square[i-1][j-1],square[i][j-1]})+1;
+                result = max(square[i][j],result);
             }
         }
-    }
-    for(int i = 1;i < n+1;i++){
-        result = max(result,*max_element(square[i].begin(),square[i].end()));
     }
     cout<<result*result;
     return 0;
