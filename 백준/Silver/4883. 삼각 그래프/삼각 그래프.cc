@@ -14,14 +14,14 @@ int main(void){
         for(int i = 0;i < a;i++){
             cin>>dp[i][0]>>dp[i][1]>>dp[i][2];
         }
-        dp[0][0] = 2147483647;
+        dp[0][0] = 200000001;
         dp[0][2]+=dp[0][1];
         for(int i = 1;i < a;i++){
-            dp[i][0] += min(dp[i-1][1],dp[i-1][0]);
-            dp[i][1] += min({dp[i-1][0],dp[i-1][1],dp[i-1][2],dp[i][0]});
-            dp[i][2] += min({dp[i][1],dp[i-1][1],dp[i-1][2]});
+            dp[i][0]+=min(dp[i-1][0],dp[i-1][1]);
+            dp[i][1]+=min({dp[i-1][0],dp[i-1][1],dp[i-1][2],dp[i][0]});
+            dp[i][2]+=min({dp[i-1][1],dp[i-1][2],dp[i][1]});
         }
-        cout<<k<<". "<<dp[a-1][1]<<endl;
+        cout<<k<<". "<<dp[a-1][1]<<"\n";
         k++;
     }
     return 0;
