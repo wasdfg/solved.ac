@@ -17,7 +17,7 @@ int main(void){
     }
     for(int i = 0;i < n;i++){
         for(int j = 99;j >= health[i];j--){
-            kn[j] = max(kn[j],kn[j-health[i]]+happy[i]);
+            kn[j] = max(kn[j-health[i]]+happy[i],kn[j]);
         }
     }
     cout<<kn[99];
