@@ -8,7 +8,7 @@ int main(void){
     int n,k;
     cin>>n;
     vector<vector<int>> jump(20,vector<int>(2,0));
-    vector<vector<int>> dp(20,vector<int>(2,1000000000));
+    vector<vector<int>> dp(20,vector<int>(2,1000001));
     for(int i = 0;i < n-1;i++){
         cin>>jump[i][0]>>jump[i][1];
     }
