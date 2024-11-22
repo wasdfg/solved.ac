@@ -16,14 +16,14 @@ int main(void){
     dp[0][0] = 1;
     for(int i = 0;i < n;i++){
         for(int j = 0;j < n;j++){
-            if(jump[i][j] == 0 || dp[i][j] == 0){
+            if(dp[i][j] == 0 || jump[i][j] == 0)
                 continue;
+            int x = jump[i][j];
+            if(i+x < n){
+                dp[i+x][j]+=dp[i][j];
             }
-            if(i+jump[i][j] < n){
-                dp[i+jump[i][j]][j]+=dp[i][j];
-            }
-            if(j+jump[i][j] < n){
-                dp[i][j+jump[i][j]]+=dp[i][j];
+            if(j+x < n){
+                dp[i][j+x]+=dp[i][j]; 
             }
         }
     }
