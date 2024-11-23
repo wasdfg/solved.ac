@@ -20,7 +20,7 @@ int main(void){
         dp[i] = min(dp[i-1],dp[i])+1;
     }
     cout<<dp[n]-1<<endl;
-    while(n != 0){
+    while(n){
         cout<<n<<" ";
         if(dp[n] == dp[n-1]+1){
             n = n-1;
