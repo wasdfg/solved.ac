@@ -25,6 +25,9 @@ int dfs(int x,int y){
 }
 
 int main(void){
+    ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
     int result = 1;
     cin>>n;
     bamboo.assign(n,vector<int>(n,0));
