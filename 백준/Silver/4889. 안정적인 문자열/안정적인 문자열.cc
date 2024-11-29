@@ -11,17 +11,15 @@ int main(void){
         result = 0;
         stack<char> x;
         cin>>s;
+        if(s[0] == '-'){
+            break;
+        }
         for(int i = 0;i < s.length();i++){
-            if(s[i] == '-'){
-                return 0;
+            if(x.empty() || !(x.top() == '{' && s[i] == '}')){
+                x.push(s[i]);
             }
             else{
-                if(!x.empty() && x.top() == '{' && s[i] == '}'){
-                    x.pop();
-                }
-                else{
-                    x.push(s[i]);
-                }
+                x.pop();
             }
         }
         while(!x.empty()){
@@ -36,7 +34,7 @@ int main(void){
                 result+=2;
             }
         }
-        cout<<check<<". "<<result<<endl;
+        cout<<check<<". "<<result<<"\n";
         check++;
     }
     return 0;
