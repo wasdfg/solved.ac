@@ -4,6 +4,9 @@
 using namespace std;
 
 int main(void){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
     int n,x,result = 0;
     cin>>n;
     vector<int> ball(1000001,0);
