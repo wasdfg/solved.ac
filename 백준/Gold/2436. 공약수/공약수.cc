@@ -16,16 +16,16 @@ ull gcd(ull x,ull y){
 }
 
 int main(void){
-    ull a,b,c = 2,d = 1000000001;
+    ull a,b,c = 2,d = 100000001;
     cin>>a>>b;
     for(int i = 1;i*i <= b/a;i++){
-        if((b/a) % i == 0 && gcd((a*b)/(a*i),(a*i)) == a){
-            if(d-c > ((a*b)/(a*i)-(a*i))){
-                d = (a*b)/(a*i);
-                c = a*i;
+        if((b/a) % i == 0){
+            if(gcd(b/a/i,i) == 1 &&  i + b/a/i < c+d){
+                c = i;
+                d = b/a/i;
             }
         }
     }
-    cout<<c<<" "<<d;
+    cout<<c*a<<" "<<d*a;
     return 0;
 }
