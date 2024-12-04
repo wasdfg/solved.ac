@@ -5,14 +5,15 @@ using namespace std;
 
 int main(void){
     int t,n;
-    vector<int> prime(250000,1);
+    vector<bool> prime(250000,1);
     prime[1] = 0;
     for(int i = 2;i*i <= 250000;i++){
         for(int j = 2;j*i <= 250000;j++){
             prime[i*j] = 0;
         }
     }
-    while(cin>>n){
+    while(1){
+        cin>>n;
         if(n == 0){
             return 0;
         }
