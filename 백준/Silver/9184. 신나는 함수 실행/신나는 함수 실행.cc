@@ -1,5 +1,4 @@
 #include<iostream>
-#include<vector>
 
 using namespace std;
 
@@ -35,7 +34,7 @@ int main(void){
             return 0;
         }
         else{
-            cout<<"w("<<a<<", "<<b<<", "<<c<<") = "<<w[a+50][b+50][c+50]<<endl;
+            cout<<"w("<<a<<", "<<b<<", "<<c<<") = "<<w[a+50][b+50][c+50]<<"\n";
         }
     }
     return 0;
