@@ -14,13 +14,13 @@ int main(void){
     sort(len.begin(),len.end());
     right = len[k-1];
     while(left <= right){
-        long long mid = (left+right)/2;
+        long long mid = (left + right)/2;
         count = 0;
         for(int i = 0;i < k;i++){
             count+=(len[i]/mid);
         }
         if(count >= n){
-            result = max(result,mid);
+            result = mid;
             left = mid+1;
         }
         else{
