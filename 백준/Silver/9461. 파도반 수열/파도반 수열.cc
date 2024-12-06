@@ -15,7 +15,7 @@ int main(void){
     }
     for(int i = 0;i < t;i++){
         cin>>n;
-        cout<<dp[n-1]<<endl;
+        cout<<dp[n-1]<<"\n";
     }
     return 0;
 }
