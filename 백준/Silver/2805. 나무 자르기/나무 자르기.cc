@@ -14,13 +14,13 @@ int main(void){
     sort(tree.begin(),tree.end());
     right = tree[n-1];
     while(left <= right){
-        long long mid = (left+right)/2;
+        long long mid = (left + right)/2;
         count = 0;
         for(int i = 0;i < n;i++){
-            count+=(tree[i] <= mid?0:tree[i]-mid);
+            count+=(tree[i]-mid > 0?tree[i]-mid:0);
         }
         if(count >= m){
-            result = max(result,mid);
+            result = max(mid,result);
             left = mid+1;
         }
         else{
