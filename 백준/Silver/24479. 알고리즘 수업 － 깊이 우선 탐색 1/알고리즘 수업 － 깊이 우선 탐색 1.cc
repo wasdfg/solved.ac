@@ -4,37 +4,39 @@
 
 using namespace std;
 
-vector<int> dot[100001];
+int n,check = 1;
+vector<int> graph[100001];
 vector<bool> visited(100001,0);
-vector<int> before(100001,0);
-int cnt = 1;
+vector<int> order;
 
-void dfs(int start,int x){
-    visited[start] = 1;
-    x = cnt;
-    before[start] = x;
-    for(int i = 0;i < dot[start].size();i++){
-        if(visited[dot[start][i]] == 0){
-            cnt+=1;
-            dfs(dot[start][i],cnt);
+void dfs(int now){
+    for(int i = 0;i < graph[now].size();i++){
+        if(visited[graph[now][i]] == 0){
+            visited[graph[now][i]] = 1;
+            check++;
+            order[graph[now][i]] = check;
+            dfs(graph[now][i]);
         }
     }
 }
 
 int main(void){
-    int n,m,r,a,b;
+    int m,r,a,b;
     cin>>n>>m>>r;
+    order.assign(n+1,0);
     for(int i = 0;i < m;i++){
         cin>>a>>b;
-        dot[a].push_back(b);
-        dot[b].push_back(a);
+        graph[a].push_back(b);
+        graph[b].push_back(a);
     }
-    for(int i = 1;i <= n;i++){
-        sort(dot[i].begin(),dot[i].end());
+    for(int i = 1;i < n+1;i++){
+        sort(graph[i].begin(),graph[i].end());
     }
-    dfs(r,cnt);
-    for(int i = 1;i <= n;i++){
-        cout<<before[i]<<"\n";
+    visited[r] = 1;
+    order[r] = check;
+    dfs(r);
+    for(int i = 1;i < n+1;i++){
+        cout<<order[i]<<"\n";
     }
     return 0;
 }
