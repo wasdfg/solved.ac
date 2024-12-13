@@ -13,7 +13,7 @@ int main(void){
     for(int i = 0;i < k;i++){
         check+=degree[i];
     }
-    result = max(check,result);
+    result = check;
     for(int i = 0;i < n-k;i++){
         check-=degree[i];
         check+=degree[k+i];
