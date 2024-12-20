@@ -6,28 +6,29 @@ using namespace std;
 
 int main(void){
     int n,m,result = 0;
-    cin>>m>>n;
-    vector<vector<int>> tomato(n,vector<int>(m,0));
-    queue<pair<int,int>> togo;
     int dx[4] = {0,0,-1,1};
     int dy[4] = {1,-1,0,0};
+    cin>>m>>n;
+    vector<vector<int>> tomato(n,vector<int>(m,0));
+    queue<pair<pair<int,int>,int>> togo;
     for(int i = 0;i < n;i++){
         for(int j = 0;j < m;j++){
             cin>>tomato[i][j];
             if(tomato[i][j] == 1){
-                togo.push({i,j});
+                togo.push({{i,j},0});
             }
         }
     }
     while(!togo.empty()){
-        int x = togo.front().first;
-        int y = togo.front().second;
+        int x = togo.front().first.first;
+        int y = togo.front().first.second;
+        int day = togo.front().second;
         togo.pop();
+        result = max(day,result);
         for(int i = 0;i < 4;i++){
             if(x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < m && tomato[x+dx[i]][y+dy[i]] == 0){
-                tomato[x+dx[i]][y+dy[i]] = tomato[x][y]+1;
-                result = max(result,tomato[x+dx[i]][y+dy[i]]);
-                togo.push({x+dx[i],y+dy[i]});
+                tomato[x+dx[i]][y+dy[i]] = 1;
+                togo.push({{x+dx[i],y+dy[i]},day+1});
             }
         }
     }
@@ -39,6 +40,6 @@ int main(void){
             }
         }
     }
-    cout<<(result > 0?result-1:0);
+    cout<<result;
     return 0;
 }
