@@ -11,77 +11,55 @@ int main(void){
     int dy[4] = {1,-1,0,0};
     string s;
     cin>>n;
-    vector<vector<int>> color(n,vector<int>(n,0));
+    vector<string> color(n);
     vector<vector<bool>> visited(n,vector<bool>(n,0));
     queue<pair<int,int>> togo;
-
     for(int i = 0;i < n;i++){
-        cin>>s;
-        for(int j = 0;j < s.length();j++){
-            if(s[j] == 'R'){
-                color[i][j] = 1;
-            }
-            else if(s[j] == 'B'){
-                color[i][j] = 2;
-            }
-            else{
-                color[i][j] = 3;
-            }
-        }
+        cin>>color[i];
     }
     for(int i = 0;i < n;i++){
         for(int j = 0;j < n;j++){
             if(visited[i][j] == 0){
-                visited[i][j] = 1;
                 togo.push({i,j});
-                if(color[i][j] == 1){
-                    check = 1;
-                }
-                else if(color[i][j] == 2){
-                    check = 2;
-                }
-                else{
-                    check = 3;
-                }
+                visited[i][j] = 1;
+                char c = color[i][j];
                 while(!togo.empty()){
                     int x = togo.front().first;
                     int y = togo.front().second;
                     togo.pop();
-                    for(int k = 0;k < 4;k++){
-                        if(x+dx[k] >= 0 && x+dx[k] < n && y+dy[k] >= 0 && y+dy[k] < n && visited[x+dx[k]][y+dy[k]] == 0 && color[x+dx[k]][y+dy[k]] == check){
-                            visited[x+dx[k]][y+dy[k]] = 1;
-                            togo.push({x+dx[k],y+dy[k]});
+                    for(int i = 0;i < 4;i++){
+                        if(x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < n && color[x+dx[i]][y+dy[i]] == c && visited[x+dx[i]][y+dy[i]] == 0){
+                            visited[x+dx[i]][y+dy[i]] = 1;
+                            togo.push({x+dx[i],y+dy[i]});
                         }
                     }
                 }
                 noblind++;
-
             }
         }
     }
     visited.assign(n,vector<bool>(n,0));
-    while(!togo.empty()){
-        togo.pop();
+    for(int i = 0;i < n;i++){
+        for(int j = 0;j < n;j++){
+            if(color[i][j] == 'G'){
+                color[i][j] = 'R';
+            }
+        }
     }
     for(int i = 0;i < n;i++){
         for(int j = 0;j < n;j++){
             if(visited[i][j] == 0){
-                visited[i][j] = 1;
                 togo.push({i,j});
-                if(color[i][j] == 1 || color[i][j] == 3){
-                    check = 1;
-                }
-                else{
-                    check = 0;
-                }
+                visited[i][j] = 1;
+                char c = color[i][j];
                 while(!togo.empty()){
                     int x = togo.front().first;
                     int y = togo.front().second;
                     togo.pop();
-                    for(int k = 0;k < 4;k++){
-                        if(x+dx[k] >= 0 && x+dx[k] < n && y+dy[k] >= 0 && y+dy[k] < n && visited[x+dx[k]][y+dy[k]] == 0 && color[x+dx[k]][y+dy[k]]% 2 == check){
-                            visited[x+dx[k]][y+dy[k]] = 1;
-                            togo.push({x+dx[k],y+dy[k]});
+                    for(int i = 0;i < 4;i++){
+                        if(x+dx[i] >= 0 && x+dx[i] < n && y+dy[i] >= 0 && y+dy[i] < n && color[x+dx[i]][y+dy[i]] == c && visited[x+dx[i]][y+dy[i]] == 0){
+                            visited[x+dx[i]][y+dy[i]] = 1;
+                            togo.push({x+dx[i],y+dy[i]});
                         }
                     }
                 }
