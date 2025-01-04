@@ -18,20 +18,20 @@ int main(void){
     }
     for(int i = 1;i < n+1;i++){
         if(visited[i] == 0){
-            togo.push(i);
             visited[i] = 1;
-            while(!togo.empty()){
-                int x = togo.front();
-                togo.pop();
-                for(int j = 0;j < graph[x].size();j++){
-                    if(visited[graph[x][j]] == 0){
-                        visited[graph[x][j]] = 1;
-                        togo.push(graph[x][j]);
-                    }
-                }
-            }
+            togo.push(i);
             count++;
         }
+        while(!togo.empty()){
+            int now = togo.front();
+            togo.pop();
+            for(int j = 0;j < graph[now].size();j++){
+                if(visited[graph[now][j]] == 0){
+                    visited[graph[now][j]] = 1;
+                    togo.push(graph[now][j]);
+                }
+            }
+        } 
     }
     cout<<count;
     return 0;
