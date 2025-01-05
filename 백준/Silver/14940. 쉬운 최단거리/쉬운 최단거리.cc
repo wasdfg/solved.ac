@@ -18,7 +18,7 @@ int main(void){
             if(zido[i][j] == 2){
                 togo.push({i,j});
                 visited[i][j] = 1;
-                zido[i][j] = 1;
+                zido[i][j] = 0;
             }
         }
     }
@@ -36,17 +36,14 @@ int main(void){
     }
     for(int i = 0;i < n;i++){
         for(int j = 0;j < m;j++){
-            if(zido[i][j] != 0 && visited[i][j] == 1){
-                cout<<zido[i][j]-1<<" ";
-            }
-            else if(zido[i][j] == 0){
-                cout<<"0 ";
-            }
-            else if(zido[i][j] == 1 && visited[i][j] == 0){
+            if(visited[i][j] == 0 && zido[i][j] == 1){
                 cout<<"-1 ";
             }
+            else{
+                cout<<zido[i][j]<<" ";
+            }
         }
-        cout<<endl;
+        cout<<"\n";
     }
     return 0;
 }
